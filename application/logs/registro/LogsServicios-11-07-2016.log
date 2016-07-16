@@ -1,0 +1,13 @@
+11/07/2016 03:34:21   '$2y$10$Lcr1XCL2zjFsRzSmoP4lheRq5k5p5/vsR60RPK4HCiP7PIX8p01/e'
+11/07/2016 10:32:55   '$2y$10$Lcr1XCL2zjFsRzSmoP4lheRq5k5p5/vsR60RPK4HCiP7PIX8p01/e'
+11/07/2016 11:59:50   ********_FILES*********
+11/07/2016 11:59:50   array (
+  'img1' => 
+  array (
+    'name' => 'DocFaltantes.xlsx',
+    'type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'tmp_name' => '/Applications/MAMP/tmp/php/phpxxm1vb',
+    'error' => 0,
+    'size' => 38201,
+  ),
+)

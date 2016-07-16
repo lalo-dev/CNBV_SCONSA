@@ -1,0 +1,28 @@
+14/07/2016 09:55:25   '$2y$10$Lcr1XCL2zjFsRzSmoP4lheRq5k5p5/vsR60RPK4HCiP7PIX8p01/e'
+14/07/2016 12:26:03   ********_FILES*********
+14/07/2016 12:26:03   array (
+  'img1' => 
+  array (
+    'name' => '2016071304053214684439322.pptx',
+    'type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'tmp_name' => '/Applications/MAMP/tmp/php/phpHKFkK9',
+    'error' => 0,
+    'size' => 2265264,
+  ),
+)
+14/07/2016 12:26:03   array (
+  'file_name' => '20160714122603146851716367.pptx',
+  'file_type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'file_path' => '/Applications/MAMP/htdocs/cnbv/content/pat_pres_ejecutiva/25/',
+  'full_path' => '/Applications/MAMP/htdocs/cnbv/content/pat_pres_ejecutiva/25/20160714122603146851716367.pptx',
+  'raw_name' => '20160714122603146851716367',
+  'orig_name' => '20160714122603146851716367.pptx',
+  'client_name' => '2016071304053214684439322.pptx',
+  'file_ext' => '.pptx',
+  'file_size' => 2212.170000000000072759576141834259033203125,
+  'is_image' => false,
+  'image_width' => NULL,
+  'image_height' => NULL,
+  'image_type' => '',
+  'image_size_str' => '',
+)

@@ -1,0 +1,22 @@
+09/07/2016 08:02:31   array (
+  'img1' => 
+  array (
+    'name' => 'diagrama01.jpg',
+    'type' => 'image/jpeg',
+    'tmp_name' => '/Applications/MAMP/tmp/php/phps7YBNQ',
+    'error' => 0,
+    'size' => 214294,
+  ),
+)
+09/07/2016 08:02:44   modelo
+09/07/2016 08:02:44   array (
+  'img2' => 
+  array (
+    'name' => 'diagrama02.jpg',
+    'type' => 'image/jpeg',
+    'tmp_name' => '/Applications/MAMP/tmp/php/php1GQkwq',
+    'error' => 0,
+    'size' => 188800,
+  ),
+)
+09/07/2016 11:05:36   '$2y$10$Lcr1XCL2zjFsRzSmoP4lheRq5k5p5/vsR60RPK4HCiP7PIX8p01/e'

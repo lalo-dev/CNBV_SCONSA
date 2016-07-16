@@ -1,0 +1,55 @@
+12/07/2016 12:00:15   ********_FILES*********
+12/07/2016 12:00:15   array (
+  'img1' => 
+  array (
+    'name' => 'NDEAv25.pdf',
+    'type' => 'application/pdf',
+    'tmp_name' => '/Applications/MAMP/tmp/php/phpCYgMyv',
+    'error' => 0,
+    'size' => 578165,
+  ),
+)
+12/07/2016 12:00:15   array (
+  'file_name' => '20160712120015146829961518.pdf',
+  'file_type' => 'application/pdf',
+  'file_path' => '/Applications/MAMP/htdocs/cnbv/content/pat_pres_ejecutiva/19/',
+  'full_path' => '/Applications/MAMP/htdocs/cnbv/content/pat_pres_ejecutiva/19/20160712120015146829961518.pdf',
+  'raw_name' => '20160712120015146829961518',
+  'orig_name' => '20160712120015146829961518.pdf',
+  'client_name' => 'NDEAv25.pdf',
+  'file_ext' => '.pdf',
+  'file_size' => 564.6100000000000136424205265939235687255859375,
+  'is_image' => false,
+  'image_width' => NULL,
+  'image_height' => NULL,
+  'image_type' => '',
+  'image_size_str' => '',
+)
+12/07/2016 12:01:57   ********_FILES*********
+12/07/2016 12:01:57   array (
+  'img1' => 
+  array (
+    'name' => 'AvanceCONACYT_Mayo16.pptx',
+    'type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'tmp_name' => '/Applications/MAMP/tmp/php/phpaCsKBB',
+    'error' => 0,
+    'size' => 106255,
+  ),
+)
+12/07/2016 12:01:57   array (
+  'file_name' => '20160712120157146829971724.pptx',
+  'file_type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'file_path' => '/Applications/MAMP/htdocs/cnbv/content/pat_pres_ejecutiva/20/',
+  'full_path' => '/Applications/MAMP/htdocs/cnbv/content/pat_pres_ejecutiva/20/20160712120157146829971724.pptx',
+  'raw_name' => '20160712120157146829971724',
+  'orig_name' => '20160712120157146829971724.pptx',
+  'client_name' => 'AvanceCONACYT_Mayo16.pptx',
+  'file_ext' => '.pptx',
+  'file_size' => 103.7600000000000051159076974727213382720947265625,
+  'is_image' => false,
+  'image_width' => NULL,
+  'image_height' => NULL,
+  'image_type' => '',
+  'image_size_str' => '',
+)
+12/07/2016 11:55:06   '$2y$10$Lcr1XCL2zjFsRzSmoP4lheRq5k5p5/vsR60RPK4HCiP7PIX8p01/e'
