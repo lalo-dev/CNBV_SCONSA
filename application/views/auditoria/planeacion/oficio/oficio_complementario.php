@@ -136,7 +136,7 @@
                                             <tr>
                                                 <td>
                                                     <h3 class="h5 font-w600 push-10">
-                                                        <a class="link-effect" href="oficio_complementario_detalle<?php echo '/'.$valuea->id_rev; ?>"> <?= $key+1; ?></a>
+                                                        <a class="link-effect" href="oficio_complementario_detalle<?php echo '/'.$valuea->id_rev; ?>"> AUDITORIA <?= $valuea->id_rev ?></a>
                                                     </h3>
                                                 </td>
                                                 <td class="text-left"><?= $valuea->des; ?></td>

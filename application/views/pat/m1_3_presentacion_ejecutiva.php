@@ -269,7 +269,7 @@
                                 <h4 class="font-w300 push-15">Opciones</h4>
                                 <div class="row">
                                     <div class="col-md-2 col-lg-offset-4">
-                                        <a class="block block-link-hover3 text-center" href="javascript:void(0)">
+                                        <a class="block block-link-hover3 text-center" href="<?=URL;?>m1_3_presentacion_ejecutiva_down_list"> 
                                             <div class="block-content block-content-full">
                                                 <i class="si si-printer fa-4x text-primary"></i>
                                                 <div class="font-w600 push-15-t">Imprimir lista</div>

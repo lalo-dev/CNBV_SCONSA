@@ -55,6 +55,17 @@ class PatController extends MY_Controller {
 		$data['getRevisiones'] = $this->Pat_m->get_pat_revisiones($pat_ano);
 		$this->load->view('pat/m1_0_0_form_pat', $data);
 	}
+	public function m1_0_0_form_pat_down_list($pat_ano = null){
+		$this->load->helper(array('download', 'file', 'html' ));
+		$this->load->library("excel");			
+		$result = $this->Pat_m->get_pat_revisiones_down_list($pat_ano); 
+        if (is_array($result)){            
+            $this->excel->setActiveSheetIndex(0);            
+            $this->excel->stream('lstRevisiones_'.trim($pat_ano).'_' . date('Y_m_d_H_i_s') . '_.xls', $result);                
+        }else {
+            print_r("Error interno, consulta a su administrador");
+        } 
+	}
 
 	public function m1_0_0_form_pat_revision_commit_add(){
 		$this->form_validation->set_error_delimiters('<p>', '</p>');
@@ -116,6 +127,7 @@ class PatController extends MY_Controller {
 		$data['getpat_universo'] = $this->Pat_m->data_cat('pat_universo');
 		$data['get_riesgos'] = $this->Pat_m->obtner_lista_riesgos();
 		$data['get_riesgos_rev'] = $this->Pat_m->obtner_lista_riesgos_rev($id_rev);
+		$data['get_areas_rev'] = $this->Pat_m->obtner_lista_areas_rev($id_rev);
 		$data['get_revision'] = $this->Pat_m->get_pat_revision_unica($id_rev);
 
 		$this->load->view('pat/m1_0_0_form_pat_editar_revision', $data);
@@ -179,6 +191,60 @@ class PatController extends MY_Controller {
 		echo json_encode($data);
     }
 
+    function update_revision_areas_revisar_add(){
+		$this->form_validation->set_rules('id_revision', 'id_revision', 'trim|required|max_length[100]');
+		$this->form_validation->set_rules('id_area', 'id_area', 'trim|required|max_length[100]');
+		if ($this->form_validation->run() == true) {
+			$data = $this->Pat_m->update_revision_areas_revisar_add();
+		}else{
+			$data = false;
+		}
+		echo json_encode($data);
+    }
+
+    function update_revision_areas_revisar_delete(){    	
+    	$this->form_validation->set_rules('id_revision', 'id_revision', 'trim|required|max_length[100]');
+		$this->form_validation->set_rules('id_area', 'id_area', 'trim|required|max_length[100]');
+		if ($this->form_validation->run() == true) {
+			$data = $this->Pat_m->update_revision_areas_revisar_delete();
+		}else{
+			$data = false;
+		}
+		echo json_encode($data);
+    }
+
+    public function revision_btn_revizado(){//CHANGE STATUS USUARIO 
+		//$this->form_validation->set_rules('estatus_revisado', 'estatus_revisado', 'trim|required|max_length[11]');
+		$this->form_validation->set_rules('id_rev', 'id_rev', 'trim|required|max_length[11]');
+		if ($this->form_validation->run() == true) {
+			$data = $this->Pat_m->revision_btn_revizado_m();	
+		}else{
+			$data = false;
+		}			
+		echo json_encode($data);
+	}
+    public function revision_check_revizado(){//CHANGE STATUS USUARIO 
+		$this->form_validation->set_rules('estatus_revisado', 'estatus_revisado', 'trim|required|max_length[11]');
+		$this->form_validation->set_rules('id_rev', 'id_rev', 'trim|required|max_length[11]');
+		if ($this->form_validation->run() == true) {
+			$data = $this->Pat_m->revision_check_revizado_m();	
+		}else{
+			$data = false;
+		}			
+		echo json_encode($data);
+	}
+
+	 public function revision_check_validado(){//CHANGE STATUS USUARIO 
+		$this->form_validation->set_rules('estatus_validado', 'estatus_validado', 'trim|required|max_length[11]');
+		$this->form_validation->set_rules('id_rev', 'id_rev', 'trim|required|max_length[11]');
+		if ($this->form_validation->run() == true) {
+			$data = $this->Pat_m->revision_check_validado_m();	
+		}else{
+			$data = false;
+		}			
+		echo json_encode($data);
+	}
+
 	//CONTROLADORES PARA PRESENTACION EJECUTIVA
 	public function m1_3_presentacion_ejecutiva(){
 		$data['gets_pres_ejecutiva'] = $this->Pat_m->gets_pres_ejecutiva();
@@ -189,18 +255,30 @@ class PatController extends MY_Controller {
 	public function get_down_file($id_file = null){
 		   $this->load->helper(array('download', 'file', 'html' ));	
 		   $data = $this->Pat_m->get_downloads($id_file ); 
-		   $this->logSW( var_export($data, true) );
+		   //$this->logSW( var_export($data, true) );
 		   if (!empty($data)) {
 			   $get_ruta = URL. $data->ruta; 
-			   $this->logSW( var_export($get_ruta, true) );			   
+			   //$this->logSW( var_export($get_ruta, true) );			   
 			   $get_nombre = $data->nombre; 
-			   $this->logSW( var_export($get_nombre, true) );
+			   //$this->logSW( var_export($get_nombre, true) );
 		       $data_url = file_get_contents($get_ruta); 
 		       //$this->logSW( var_export($data_url, true) );
 		       force_download($get_nombre, $data_url);
 		    }else{
 		    	echo "Seguridad activada";
 		    }	
+	}
+
+	public function m1_3_presentacion_ejecutiva_down_list($pat_ano = null){
+		$this->load->helper(array('download', 'file', 'html' ));
+		$this->load->library("excel");			
+		$result = $this->Pat_m->gets_pres_ejecutiva_down_list($pat_ano); 
+        if (is_array($result)){            
+            $this->excel->setActiveSheetIndex(0);            
+            $this->excel->stream('lstPlaneacionEjecutva_'.trim($pat_ano).'_' . date('Y_m_d_H_i_s') . '_.xls', $result);                
+        }else {
+            print_r("Error interno, consulta a su administrador");
+        } 
 	}
 
 	public function m1_3_presentacion_ejecutiva_form(){
@@ -279,15 +357,23 @@ class PatController extends MY_Controller {
 	}
 
 	//CONTROLADORES PARA MAPA DE RIESGO
-	public function m1_4_mapa_riesgos(){
-		$data['get_riesgos'] = $this->Pat_m->obtner_lista_riesgos();
+
+	public function m1_4_mapa_riesgos_index(){
+		$data['getPats'] = $this->Pat_m->get_pats_total_mapa_riesgos();
+		$this->load->view('pat/m1_4_mapa_riesgos_index', $data);
+	}
+
+	public function m1_4_mapa_riesgos($id_pat= null){
+		$data['get_riesgos'] = $this->Pat_m->obtner_lista_riesgos_filtro($id_pat);
+		$data['id_pat'] = $id_pat;
 		$this->load->view('pat/m1_4_mapa_riesgos',$data);
 	}
 
-	public function m1_4_mapa_riesgos_form(){
+	public function m1_4_mapa_riesgos_form($id_pat= null){
+		$data['id_pat'] = $id_pat;
 		$data['getRiesgo_impacto'] = $this->Pat_m->data_cat('pat_riesgo_impacto');
 		$data['getRiesgo_probabilidad'] = $this->Pat_m->data_cat('pat_riesgo_probabilidad');
-		$data['get_riesgos'] = $this->Pat_m->obtner_lista_riesgos();
+		$data['get_riesgos'] = $this->Pat_m->obtner_lista_riesgos_filtro($id_pat);
 		$this->load->view('pat/m1_4_mapa_riesgos_form',$data);
 	}	
 

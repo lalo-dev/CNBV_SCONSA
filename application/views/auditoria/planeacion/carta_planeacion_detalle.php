@@ -87,7 +87,7 @@
                 <div class="col-sm-5">
                     <h1 class="page-heading">
                         Detalle<small> Carta de planeación</small>
-
+                        <!-- <?= $comentarios ?> -->
                     </h1>
                 </div>
                 <div class="col-sm-7 text-right hidden-xs">
@@ -103,7 +103,7 @@
         <!-- END Page Header -->
 
         <!-- Page Content -->
-        <div class="content">
+        <div id="c-mdl" class="content">
             <div class="block">
                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
                     <li class="active">
@@ -200,19 +200,11 @@
                                                         <div class="block">
                                                             <div class="js-chat-talk overflow-y-auto block-content block-content-full" data-chat-id="3">
                                                                 <!-- Messages -->
-                                                                <div class="font-s12 text-muted text-center push-20-t push-15"><em>Yesterday</em></div>
-                                                                <div class="block block-rounded block-transparent push-15 push-50-l">
-                                                                    <div class="block-content block-content-full block-content-mini bg-gray-lighter">Hi there!</div>
-                                                                </div>
-                                                                <div class="font-s12 text-muted text-center push-20-t push-10"><em>Today</em></div>
-                                                                <div class="block block-rounded block-transparent push-15 push-50-r">
-                                                                    <div class="block-content block-content-full block-content-mini bg-gray-light">Hi!!!</div>
-                                                                </div>
                                                                 <!-- END Messages -->
                                                             </div>
                                                             <div class="js-chat-form block-content block-content-full block-content-mini">
-                                                                <form action="base_ui_chat.html" method="post">
-                                                                    <input class="js-chat-input form-control" type="text" data-target-chat-id="3" placeholder="Type a message and hit enter..">
+                                                                <form id="dddd" action="base_ui_chat.html" method="post">
+                                                                    <input id="txtChat" class="js-chat-input form-control" type="text" data-target-chat-id="3" placeholder="Type a message and hit enter..">
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -265,12 +257,12 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox" ><span></span> Verficado
+                                    <input type="checkbox" value="1" data-bind="checked: tab2.verificado"><span></span> Verficado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox" ><span></span> Validado
+                                    <input type="checkbox" value="1" data-bind="checked: tab2.validado"><span></span> Validado
                                 </label>
                             </div>
                         </div>
@@ -290,8 +282,8 @@
                                             <form class="form-horizontal push-10-t" action="base_forms_elements_modern.html" method="post" onsubmit="return false;">
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
-                                                        <div class="form-material form-material-info floating">
-                                                            <textarea class="form-control" id="material-textarea-small2" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate dignissimos ex ipsam, maiores neque similique. Blanditiis dolorem earum, natus necessitatibus perferendis qui quidem rem rerum velit. Nobis perferendis quibusdam quo.</textarea>
+                                                        <div class="form-material floating">
+                                                            <textarea class="form-control" id="material-textarea-small2" rows="3" data-bind="value:tab2.obser1"></textarea>
                                                             <label for="material-color-info2">Modificar</label>
                                                         </div>
                                                     </div>
@@ -312,7 +304,7 @@
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
                                                         <div class="form-material form-material-info floating">
-                                                            <textarea class="form-control" id="material-textarea-small2" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias eius excepturi modi odit possimus quisquam ut! Consequuntur earum eius error fugiat ipsum maxime mollitia nisi, rem repellendus sint tenetur!</textarea>
+                                                            <textarea class="form-control" id="material-textarea-small2" rows="3" data-bind="value:tab2.obser2"></textarea>
                                                             <label for="material-color-info2">Modificar</label>
                                                         </div>
                                                     </div>
@@ -333,7 +325,7 @@
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
                                                         <div class="form-material form-material-info floating">
-                                                            <textarea class="form-control" id="material-textarea-small2" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam aliquid, aut beatae consequuntur dignissimos ducimus ea eligendi exercitationem impedit ipsum libero magnam minus modi natus nesciunt quam quibusdam, ullam!</lore></textarea>
+                                                            <textarea class="form-control" id="material-textarea-small2" rows="3" data-bind="value:tab2.obser3"></textarea>
                                                             <label for="material-color-info2">Modificar</label>
                                                         </div>
                                                     </div>
@@ -359,7 +351,7 @@
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
                                                         <div class="form-material form-material-info floating">
-                                                            <textarea class="form-control" id="material-textarea-small2" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci aperiam asperiores culpa deserunt necessitatibus nihil quisquam. Accusantium aliquam dolore minima provident, quae quia repellendus repudiandae vero. Facere, nisi, pariatur!</textarea>
+                                                            <textarea class="form-control" id="material-textarea-small2" rows="3" data-bind="value:tab2.obser4"></textarea>
                                                             <label for="material-color-info2">Modificar</label>
                                                         </div>
                                                     </div>
@@ -380,7 +372,7 @@
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
                                                         <div class="form-material form-material-info floating">
-                                                            <textarea class="form-control" id="material-textarea-small2" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda, cumque facilis harum iste magni minus officiis qui quibusdam repellat sunt suscipit! Aspernatur assumenda deserunt dignissimos dolor dolorem dolores quasi!</textarea>
+                                                            <textarea class="form-control" id="material-textarea-small2" rows="3" data-bind="value:tab2.obser5"></textarea>
                                                             <label for="material-color-info2">Modificar</label>
                                                         </div>
                                                     </div>
@@ -395,7 +387,7 @@
                                 <form class="form-horizontal push-10-t" onsubmit="return false;">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                            <button class="btn btn-sm btn-primary" type="submit" data-bind="click:saveTab2">Guardar</button>
                                             <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                         </div>
                                     </div>
@@ -410,12 +402,12 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox" ><span></span> Verficado
+                                    <input type="checkbox" value="1" data-bind="checked:tab3.verificado" ><span></span> Verficado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox" ><span></span> Validado
+                                    <input type="checkbox" value="1" data-bind="checked:tab3.validado"><span></span> Validado
                                 </label>
                             </div>
                         </div>
@@ -429,7 +421,7 @@
                                     <div class="form-group">
                                         <div class="col-md-6">
                                             <div class="form-material floating">
-                                                <select class="form-control" id="material1" size="1">
+                                                <select class="form-control" id="material1" size="1" data-bind="value:tab3.trimestre">
                                                     <option></option><!-- Empty value for demostrating material select box -->
                                                     <option value="1">Primero</option>
                                                     <option value="2">Segundo</option>
@@ -441,7 +433,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-material floating">
-                                                <select class="form-control" id="material2" size="1">
+                                                <select class="form-control" id="material2" size="1" data-bind="value:tab3.anio">
                                                     <option></option><!-- Empty value for demostrating material select box -->
                                                     <option value="1">2016</option>
                                                     <option value="2">2015</option>
@@ -455,7 +447,7 @@
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="form-material floating">
-                                                <textarea class="form-control" id="material3" rows="3"></textarea>
+                                                <textarea class="form-control" id="material3" rows="3" data-bind="value:tab3.diagnostic"></textarea>
                                                 <label for="material-textarea-small2">Diagnosticos:</label>
                                             </div>
                                         </div>
@@ -463,14 +455,14 @@
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="form-material floating">
-                                                <textarea class="form-control" id="material3" rows="3"></textarea>
+                                                <textarea class="form-control" id="material3" rows="3" data-bind="value:tab3.recomenda"></textarea>
                                                 <label for="material-textarea-small2">Recomendaciones relacionadad con:</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                            <button class="btn btn-sm btn-primary" type="submit" data-bind="click: saveTab3">Guardar</button>
                                             <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                         </div>
                                     </div>
@@ -484,12 +476,12 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox" ><span></span> Verficado
+                                    <input type="checkbox" value="1" data-bind="checked:tab4.verificado" ><span></span> Verficado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox" ><span></span> Validado
+                                    <input type="checkbox" value="1" data-bind="checked:tab4.validado" ><span></span> Validado
                                 </label>
                             </div>
                         </div>
@@ -501,6 +493,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="block-content">
+                                <button class="btn btn-sm btn-primary" type="button" data-bind="click:addFila">Agregar Fila</button>
                                     <table class="table table-condensed">
                                         <thead>
                                         <tr>
@@ -509,60 +502,29 @@
                                             <th># de Plazas</th>
                                             <th># de Plazas</th>
                                             <th># de Plazas</th>
+                                            <th></th>
                                         </tr>
                                         <tr>
                                             <th>Dirección general</th>
                                             <th>Dirección general</th>
                                             <th>Dirección general</th>
                                             <th>Dirección general</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Director General </td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Director General Adjunto </td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Director </td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Subdirector </td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Inspector</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Analista Administrativo </td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                            <td class="text-center">X</td>
-                                        </tr>
-
-                                        </tbody>
+                                        <tbody data-bind="source: tab4.plazas" data-template="plaza-temp"></tbody>
                                     </table>
+
+                                    <script id="plaza-temp" type="text/x-kendo-template">
+                                        <tr>
+                                            <td><input type="Text" data-bind="value:puesto"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir1"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir2"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir3"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir4"/></td>
+                                            <td class="text-center"><button class="btn btn-sm btn-primary" type="button" data-bind="click:deleteFila">Eliminar</button></td>
+                                        </tr>
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -586,7 +548,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                            <button class="btn btn-sm btn-primary" type="submit" data-bind="click:saveTab4">Guardar</button>
                                             <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                         </div>
                                     </div>
@@ -600,12 +562,12 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox" ><span></span> Verficado
+                                    <input type="checkbox" value="1" data-bind="checked:tab5.verificado"><span></span> Verficado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox" ><span></span> Validado
+                                    <input type="checkbox" value="1" data-bind="checked:tab5.validado"><span></span> Validado
                                 </label>
                             </div>
                         </div>
@@ -621,19 +583,19 @@
                                         <div class="form-group">
                                             <div class="col-md-11">
                                                 <div class="form-material floating">
-                                                    <select class="form-control" id="material10" size="1">
+                                                    <select class="form-control" id="sltLista" size="1" data-bind="value:tab5.id_lista_cat">
                                                         <option></option><!-- Empty value for demostrating material select box -->
                                                         <option value="1">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</option>
                                                         <option value="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</option>
                                                         <option value="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</option>
                                                         <option value="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</option>
                                                     </select>
-                                                    <label for="material10">Lista</label>
+                                                    <label for="sltLista">Lista</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="form-material floating">
-                                                    <button class="btn btn-sm btn-success">+</button>
+                                                    <button class="btn btn-sm btn-success" data-bind="click:addLista">+</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -654,18 +616,19 @@
                                             <th class="text-center" style="width: 100px;">Quitar</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody data-bind="source:tab5.listas" data-template="lista-temp"></tbody>
+                                    </table>
+                                    <script id="lista-temp" type="text/x-kendo-template">
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                            <td class="text-center">#: id_temp #</td>
+                                            <td>#: nomLista #</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
+                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-bind="click:deltLista"><i class="fa fa-times"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        </tbody>
-                                    </table>
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -676,7 +639,7 @@
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="form-material floating">
-                                                <select class="form-control" id="material10" size="1">
+                                                <select class="form-control" id="material10" size="1" data-bind="value:tab5.anio">
                                                     <option></option><!-- Empty value for demostrating material select box -->
                                                     <option value="1">2016</option>
                                                     <option value="2">2015</option>
@@ -689,7 +652,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                            <button class="btn btn-sm btn-primary" type="submit" data-bind="click:saveTab5">Guardar</button>
                                             <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                         </div>
                                     </div>
@@ -703,12 +666,12 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox" ><span></span> Verficado
+                                    <input type="checkbox" value="1" data-bind="checked:tab6.verificado"><span></span> Verificado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox" ><span></span> Validado
+                                    <input type="checkbox" value="1" data-bind="checked:tab6.validado"><span></span> Validado
                                 </label>
                             </div>
                         </div>
@@ -724,13 +687,13 @@
                                         <div class="form-group">
                                             <div class="col-md-11">
                                                 <div class="form-material floating">
-                                                    <textarea class="form-control" id="material-textarea2" rows="4"></textarea>
+                                                    <textarea class="form-control" id="material-textarea2" rows="4" data-bind="value:tab6.textObj"></textarea>
                                                     <label for="material-textarea2">Objetivo</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="form-material floating">
-                                                    <button class="btn btn-sm btn-success">+</button>
+                                                    <button class="btn btn-sm btn-success" data-bind="click:addObjetivo">+</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -751,19 +714,20 @@
                                             <th class="text-center" style="width: 100px;">Acciones</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody data-bind="source:tab6.objetivos" data-template="obje-temp"></tbody>
+                                    </table>
+                                    <script id="obje-temp" type="text/x-kendo-template">
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                            <td class="text-center">#: id_temp #</td>
+                                            <td>#: objetivo #</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" title=""><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
+                                                    <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-bind="click: editObjetivo"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" ><i class="fa fa-times"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        </tbody>
-                                    </table>
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -781,13 +745,13 @@
                                         <div class="form-group">
                                             <div class="col-md-11">
                                                 <div class="form-material floating">
-                                                    <textarea class="form-control" id="material-textarea2" rows="4"></textarea>
+                                                    <textarea class="form-control" id="material-textarea2" rows="4" data-bind="value:tab6.textFunc"></textarea>
                                                     <label for="material-textarea2">Función</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="form-material floating">
-                                                    <button class="btn btn-sm btn-success">+</button>
+                                                    <button class="btn btn-sm btn-success" data-bind="click:addFuncion">+</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -808,19 +772,20 @@
                                             <th class="text-center" style="width: 100px;">Acciones</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody data-bind="source:tab6.funciones" data-template="func-temp"></tbody>
+                                    </table>
+                                    <script id="func-temp" type="text/x-kendo-template">
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                            <td class="text-center">#: id_temp #</td>
+                                            <td>#: funcion #</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" title=""><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-bind="click:editFuncion"><i class="fa fa-pencil"></i></button>
                                                     <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        </tbody>
-                                    </table>
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -830,7 +795,7 @@
                                 <form class="form-horizontal push-10-t" onsubmit="return false;">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                            <button class="btn btn-sm btn-primary" type="submit" data-bind="click: saveTab6">Guardar</button>
                                             <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                         </div>
                                     </div>
@@ -844,12 +809,12 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox" ><span></span> Verficado
+                                    <input type="checkbox" data-bind="value:tab7.verificado"><span></span> Verficado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox" ><span></span> Validado
+                                    <input type="checkbox" data-bind="value:tab7.validado"><span></span> Validado
                                 </label>
                             </div>
                         </div>
@@ -869,7 +834,7 @@
                                             <a href="#dg-2">Dirección general ........2</a>
                                         </li>
                                         <li>
-                                            <a href="#dg-2">Dirección general ........2</a>
+                                            <a href="#dg-3">Dirección general ........3</a>
                                         </li>
                                         <li class="pull-right">
                                             <ul class="block-options push-10-t push-10-r">
@@ -887,20 +852,20 @@
                                                         <form class="form-horizontal push-10-t" onsubmit="return false;">
                                                             <div class="form-group">
                                                                 <div class="col-md-4">
-                                                                    <div class="form-material floating">
-                                                                        <input class="form-control" type="text" id="material-text2">
+                                                                    <div class="form-material">
+                                                                        <input class="form-control" type="text" id="material-text2" data-bind="value: tab7.proc1.rubro">
                                                                         <label for="material-text2">Rubro</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <div class="form-material floating">
-                                                                        <input class="form-control" type="text" id="material-proceso">
+                                                                    <div class="form-material">
+                                                                        <input class="form-control" type="text" id="material-proceso" data-bind="value: tab7.proc1.proceso">
                                                                         <label for="material-proceso">Proceso</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <div class="form-material floating">
-                                                                        <input class="form-control" type="text" id="material-objetivo">
+                                                                    <div class="form-material">
+                                                                        <input class="form-control" type="text" id="material-objetivo" data-bind="value: tab7.proc1.objetivo">
                                                                         <label for="material-objetivo">Objetivo</label>
                                                                     </div>
                                                                 </div>
@@ -911,25 +876,25 @@
                                                             <div class="form-group">
                                                                 <div class="col-sm-4">
                                                                     <div class="form-material floating">
-                                                                        <input class="form-control" type="text" id="material-objetivo">
+                                                                        <input class="form-control" type="text" id="material-objetivo" data-bind="value: tab7.proc1.etapa">
                                                                         <label for="material-objetivo">Etapa del proceso</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="form-material floating">
-                                                                        <textarea class="form-control" id="material-textarea2" rows="3"></textarea>
+                                                                        <textarea class="form-control" id="material-textarea2" rows="3" data-bind="value: tab7.proc1.descripcion"></textarea>
                                                                         <label for="material-objetivo">Descripción</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <div class="form-material floating">
-                                                                        <textarea class="form-control" id="material-textarea2" rows="3"></textarea>
+                                                                        <textarea class="form-control" id="material-textarea2" rows="3" data-bind="value: tab7.proc1.responsable"></textarea>
                                                                         <label for="material-objetivo">Responsables</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-1">
                                                                     <div class="form-material floating">
-                                                                        <button class="btn btn-sm btn-success">+</button>
+                                                                        <button class="btn btn-sm btn-success" data-proc="proc1" data-bind="click:addProceso">+</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -949,47 +914,7 @@
                                                                         <th class="text-center">Acciones</th>
                                                                     </tr>
                                                                     </thead>
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td class="text-center">1</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-
-                                                                        <td class="text-center">
-                                                                            <div class="btn-group">
-                                                                                <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" title=""><i class="fa fa-pencil"></i></button>
-                                                                                <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="text-center">2</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-
-                                                                        <td class="text-center">
-                                                                            <div class="btn-group">
-                                                                                <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" title=""><i class="fa fa-pencil"></i></button>
-                                                                                <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="text-center">3</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                                                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-
-                                                                        <td class="text-center">
-                                                                            <div class="btn-group">
-                                                                                <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" title=""><i class="fa fa-pencil"></i></button>
-                                                                                <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    </tbody>
+                                                                    <tbody data-bind="source:tab7.proc1.etapasProc" data-template="etapa-temp"></tbody>
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -1000,7 +925,7 @@
                                                             <form class="form-horizontal push-10-t" onsubmit="return false;">
                                                                 <div class="form-group">
                                                                     <div class="col-md-12">
-                                                                        <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                                                        <button class="btn btn-sm btn-primary" type="submit" data-proc="proc1" data-bind="click:saveTab7">Guardar</button>
                                                                         <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                                                     </div>
                                                                 </div>
@@ -1011,14 +936,201 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="dg-2">
-                                            <h4 class="font-w300 push-15">Profile Tab</h4>
-                                            <p>...</p>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="block-content">
+                                                        <form class="form-horizontal push-10-t" onsubmit="return false;">
+                                                            <div class="form-group">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-text2" data-bind="value: tab7.proc2.rubro">
+                                                                        <label for="material-text2">Rubro</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-proceso" data-bind="value: tab7.proc2.proceso">
+                                                                        <label for="material-proceso">Proceso</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-objetivo" data-bind="value: tab7.proc2.objetivo">
+                                                                        <label for="material-objetivo">Objetivo</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="border-b push-30">
+                                                                <h4 class="push-10">Agregar tabla</h4>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-objetivo" data-bind="value: tab7.proc2.etapa">
+                                                                        <label for="material-objetivo">Etapa del proceso</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-material floating">
+                                                                        <textarea class="form-control" id="material-textarea2" rows="3" data-bind="value: tab7.proc2.descripcion"></textarea>
+                                                                        <label for="material-objetivo">Descripción</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-material floating">
+                                                                        <textarea class="form-control" id="material-textarea2" rows="3" data-bind="value: tab7.proc2.responsable"></textarea>
+                                                                        <label for="material-objetivo">Responsables</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <div class="form-material floating">
+                                                                        <button class="btn btn-sm btn-success" data-proc="proc2" data-bind="click:addProceso">+</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="block-content">
+                                                                <table class="table table-condensed">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">#</th>
+                                                                        <th>Etapas del proceso</th>
+                                                                        <th>Descripción</th>
+                                                                        <th>Responsables</th>
+                                                                        <th class="text-center">Acciones</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody data-bind="source:tab7.proc2.etapasProc" data-template="etapa-temp"></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-md-offset-4">
+                                                            <form class="form-horizontal push-10-t" onsubmit="return false;">
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12">
+                                                                        <button class="btn btn-sm btn-primary" type="submit" data-proc="proc2" data-bind="click:saveTab7">Guardar</button>
+                                                                        <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
                                         </div>
                                         <div class="tab-pane" id="dg-3">
-                                            <h4 class="font-w300 push-15">Profile Tab</h4>
-                                            <p>...</p>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="block-content">
+                                                        <form class="form-horizontal push-10-t" onsubmit="return false;">
+                                                            <div class="form-group">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-text2" data-bind="value: tab7.proc3.rubro">
+                                                                        <label for="material-text2">Rubro</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-proceso" data-bind="value: tab7.proc3.proceso">
+                                                                        <label for="material-proceso">Proceso</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-objetivo" data-bind="value: tab7.proc3.objetivo">
+                                                                        <label for="material-objetivo">Objetivo</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="border-b push-30">
+                                                                <h4 class="push-10">Agregar tabla</h4>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-material floating">
+                                                                        <input class="form-control" type="text" id="material-objetivo" data-bind="value: tab7.proc3.etapa">
+                                                                        <label for="material-objetivo">Etapa del proceso</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-material floating">
+                                                                        <textarea class="form-control" id="material-textarea2" rows="3" data-bind="value: tab7.proc3.descripcion"></textarea>
+                                                                        <label for="material-objetivo">Descripción</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-material floating">
+                                                                        <textarea class="form-control" id="material-textarea2" rows="3" data-bind="value: tab7.proc3.responsable"></textarea>
+                                                                        <label for="material-objetivo">Responsables</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <div class="form-material floating">
+                                                                        <button class="btn btn-sm btn-success" data-proc="proc3" data-bind="click:addProceso">+</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="block-content">
+                                                                <table class="table table-condensed">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">#</th>
+                                                                        <th>Etapas del proceso</th>
+                                                                        <th>Descripción</th>
+                                                                        <th>Responsables</th>
+                                                                        <th class="text-center">Acciones</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody data-bind="source:tab7.proc3.etapasProc" data-template="etapa-temp"></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-md-offset-4">
+                                                            <form class="form-horizontal push-10-t" onsubmit="return false;">
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12">
+                                                                        <button class="btn btn-sm btn-primary" type="submit" data-proc="proc3" data-bind="click:saveTab7">Guardar</button>
+                                                                        <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <script id="etapa-temp" type="text/x-kendo-template">
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>#: etapa #</td>
+                                            <td>#: descripcion #</td>
+                                            <td>#: responsable #</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-bind="click: editProc"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -1774,6 +1886,36 @@
 <script src="<?=JS ?>plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 <script src="<?=JS ?>plugins/dropzonejs/dropzone.min.js"></script>
 <script src="<?=JS ?>plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>
+
+
+<script src="<?=JS ?>kendo.web.min.js"></script>
+<!-- <script src="//kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script> -->
+
+<script type="text/javascript">
+ var jx = null;
+ var idRevision = "<?= $id_revision ?>";
+
+    $(function(){
+
+      jx = function(m, d, s){
+            $.ajax({
+              type: "POST",
+              url: "<?=URL ?>CartaPlaneacionController/"+ m,
+              dataType: 'json',
+              data:  (d)?d:null,
+              success: function(res) {
+                s(res);
+              },
+              error: function(res) {
+                console.log("error",res);
+              }
+          });
+        }
+
+    })
+</script>
+<script src="<?=JS ?>carta.planecion.js"></script>
+<!-- <script src="<?=JS ?>plugins/angular.js"></script> -->
 
 <!-- Page JS Code -->
 <script>

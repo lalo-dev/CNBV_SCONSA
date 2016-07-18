@@ -35,6 +35,41 @@ class Pat_model extends CI_Model {
 		//$pat_ano = $this->session->userdata("pat_ano");
 		$query = "SELECT rev.id_rev  ,  rev.id_creater  ,  rev.id_pat_ano  ,  rev.no_revision  , 
 		t_rev.des as tipo_revision   ,  p_adic.des as prog_adic,  clave.des as clave  ,  
+		instancia.des  as instancia ,  justif.des as justificacion ,  
+		rev.descripcion ,  rev.objetivo ,  rev.semana_ini  ,  rev.semana_fin  ,  rev.ts_revision  ,  
+		rev.ts_hombre  ,  rev.periodo_ini ,  rev.periodo_fin  ,  aud_p.des as aud_precedente ,  
+		muestra.des as muestra  ,  univer.des as universo ,  rev.riesgo, rev.estatus_revisado,
+		rev.estatus_validado, rev.estatus_auditoria, rev.trimestre, rev.auditores
+		from pat_revisiones as rev 
+		inner join pat_data_cat t_rev on t_rev.id = rev.tipo_revision 
+		inner join pat_data_cat p_adic on p_adic.id = rev.prog_adic 
+		inner join pat_data_cat clave on clave.id = rev.clave 
+		inner join pat_data_cat instancia on instancia.id = rev.instancia 
+		inner join pat_data_cat justif on justif.id = rev.justificacion 		 
+		inner join pat_data_cat aud_p on aud_p.id = rev.aud_precedente 
+		inner join pat_data_cat muestra on muestra.id = rev.muestra 
+		inner join pat_data_cat univer on univer.id = rev.universo 
+		where rev.estatus = 0 and rev.id_pat_ano = $pat_ano; ";
+		return $this->db->query($query)->result(); 
+	}
+
+	function get_pat_revisiones_down_list($pat_ano){
+		//$pat_ano = $this->session->userdata("pat_ano");
+		$query = "SELECT rev.id_pat_ano as PAT  ,  rev.no_revision as No_revision , 
+        t_rev.des as 'Tipo revision',  p_adic.des as 'P/A/C',  clave.des as Clave  ,  
+        rev.periodo_ini as Inicio  ,  rev.periodo_fin as Fin 
+        from pat_revisiones as rev 
+        inner join pat_data_cat t_rev on t_rev.id = rev.tipo_revision 
+        inner join pat_data_cat p_adic on p_adic.id = rev.prog_adic 
+        inner join pat_data_cat clave on clave.id = rev.clave 
+		where rev.estatus = 0 and rev.id_pat_ano = $pat_ano; ";
+		return $this->db->query($query)->result(); 
+	}
+
+	function get_pat_revisiones_basura_respado($pat_ano){ //cambio de estructura en agregar areas a revizar
+		//$pat_ano = $this->session->userdata("pat_ano");
+		$query = "SELECT rev.id_rev  ,  rev.id_creater  ,  rev.id_pat_ano  ,  rev.no_revision  , 
+		t_rev.des as tipo_revision   ,  p_adic.des as prog_adic,  clave.des as clave  ,  
 		instancia.des  as instancia ,  justif.des as justificacion ,  area_rev.des as area_revizar  ,  
 		rev.descripcion ,  rev.objetivo ,  rev.semana_ini  ,  rev.semana_fin  ,  rev.ts_revision  ,  
 		rev.ts_hombre  ,  rev.periodo_ini ,  rev.periodo_fin  ,  aud_p.des as aud_precedente ,  
@@ -53,6 +88,7 @@ class Pat_model extends CI_Model {
 		where rev.estatus = 0 and rev.id_pat_ano = $pat_ano; ";
 		return $this->db->query($query)->result(); 
 	}
+
 	 function add_revision_commit(){
 		$idmarca = $this->session->userdata("idmarca");
 		$data = array(
@@ -85,7 +121,7 @@ class Pat_model extends CI_Model {
 			'clave' => $this->input->post('clave', TRUE),
 			'instancia' => $this->input->post('instancia', TRUE),
 			'justificacion' => $this->input->post('justificacion', TRUE),
-			'area_revizar' => $this->input->post('area_revizar', TRUE),
+			'area_revizar' => '0',
 			'descripcion' => $this->input->post('descripcion', TRUE),
 			'objetivo' => $this->input->post('objetivo', TRUE),
 			'semana_ini' => $this->input->post('semana_ini', TRUE),
@@ -108,12 +144,26 @@ class Pat_model extends CI_Model {
 		if ($afftectedRows){		
 			$id_rev = $this->db->insert_id();		
 			$list_riesgos = json_decode($id= $this->input->post("id_riesgos_list")); 
+			$list_areas = json_decode($id= $this->input->post("id_areas_list")); 
 	    	$idmarca = $this->session->userdata("idmarca");
 	    	if (!empty($list_riesgos)) {
 	    		$this->db->trans_start();
 	    		foreach ($list_riesgos as $id_riesgo){
 	    			$query = "INSERT INTO pat_revxriesgo (id_revision , id_riesgo, id_creater, estatus , date_created) 
 	    			VALUES ( $id_rev, $id_riesgo,  $idmarca, 0, now() );";
+	    			$this->db->query($query);
+	    		}
+	    		$this->db->trans_complete(); 
+	    		if ($this->db->trans_status() === false){                
+	                return array(	'estatus_error'=> 'errorvalidacion' ,  'error' => 'Error al regsitrar riesgos');
+	            }
+	    	}
+	    	//LISTA DE AREAS A REVISAR
+	    	if (!empty($list_areas)) {
+	    		$this->db->trans_start();
+	    		foreach ($list_areas as $id_area){
+	    			$query = "INSERT INTO pat_revxarevisar (id_revision , id_area, id_creater, estatus , date_created) 
+	    			VALUES ( $id_rev, $id_area,  $idmarca, 0, now() );";
 	    			$this->db->query($query);
 	    		}
 	    		$this->db->trans_complete(); 
@@ -128,6 +178,26 @@ class Pat_model extends CI_Model {
 
 
     function get_pat_revision_unica($id_rev){
+		$query = "SELECT rev.id_rev  ,  rev.id_creater  ,  rev.id_pat_ano  ,  rev.no_revision  , 
+		t_rev.des as tipo_revision   ,  p_adic.des as prog_adic,  clave.des as clave  ,  
+		instancia.des  as instancia ,  justif.des as justificacion ,  
+		rev.descripcion ,  rev.objetivo ,  rev.semana_ini  ,  rev.semana_fin  ,  rev.ts_revision  ,  
+		rev.ts_hombre  ,  rev.periodo_ini ,  rev.periodo_fin  ,  aud_p.des as aud_precedente ,  
+		muestra.des as muestra  ,  univer.des as universo ,  rev.riesgo, rev.estatus_revisado, rev.estatus_validado 
+		from pat_revisiones as rev 
+		inner join pat_data_cat t_rev on t_rev.id = rev.tipo_revision 
+		inner join pat_data_cat p_adic on p_adic.id = rev.prog_adic 
+		inner join pat_data_cat clave on clave.id = rev.clave 
+		inner join pat_data_cat instancia on instancia.id = rev.instancia 
+		inner join pat_data_cat justif on justif.id = rev.justificacion   
+		inner join pat_data_cat aud_p on aud_p.id = rev.aud_precedente 
+		inner join pat_data_cat muestra on muestra.id = rev.muestra 
+		inner join pat_data_cat univer on univer.id = rev.universo 
+		where rev.estatus = 0 and rev.id_rev = $id_rev; ";
+		return $this->db->query($query)->row(); 
+	}
+
+	function get_pat_revision_unica_respaldo_borrador($id_rev){//se quita campo area_revizar sera un mantenedor
 		$query = "SELECT rev.id_rev  ,  rev.id_creater  ,  rev.id_pat_ano  ,  rev.no_revision  , 
 		t_rev.des as tipo_revision   ,  p_adic.des as prog_adic,  clave.des as clave  ,  
 		instancia.des  as instancia ,  justif.des as justificacion ,  area_rev.des as area_revizar  ,  
@@ -158,7 +228,7 @@ class Pat_model extends CI_Model {
 			'clave' => $this->input->post('clave', TRUE),
 			'instancia' => $this->input->post('instancia', TRUE),
 			'justificacion' => $this->input->post('justificacion', TRUE),
-			'area_revizar' => $this->input->post('area_revizar', TRUE),
+			'area_revizar' => '0',
 			'descripcion' => $this->input->post('descripcion', TRUE),
 			'objetivo' => $this->input->post('objetivo', TRUE),
 			'semana_ini' => $this->input->post('semana_ini', TRUE),
@@ -198,7 +268,7 @@ class Pat_model extends CI_Model {
     		false;
     }
 
-    function update_revision_riesgo_delete($id_rev, $id_riesgo){    	
+    function update_revision_riesgo_delete(){    	
     	$arrayWhere = array(
     		'id_revision' => $this->input->post('id_revision', TRUE), 
     		'id_riesgo' => $this->input->post('id_riesgo', TRUE)
@@ -212,6 +282,59 @@ class Pat_model extends CI_Model {
 			return false;
     }
 
+    function update_revision_areas_revisar_add(){
+    	$idmarca = $this->session->userdata("idmarca");
+    	$data = array(
+			'id_revision' => $this->input->post('id_revision', TRUE),
+			'id_area' => $this->input->post('id_area', TRUE),
+			'id_creater' => $idmarca,	
+			'estatus' => '0',
+			'date_created' => date("Y-m-d H:i:s")
+		);
+		$this->db->insert('pat_revxarevisar', $data); //guarda usuario		
+    	$afftectedRows = $this->db->affected_rows();
+		if ($afftectedRows){		
+			$id = $this->db->insert_id();
+			return $this->db->select('*')->get_where('pat_revxarevisar', array('id' => $id ) )->row();
+    	}
+    	else
+    		false;
+    }
+
+    function update_revision_areas_revisar_delete(){    	
+    	$arrayWhere = array(
+    		'id_revision' => $this->input->post('id_revision', TRUE), 
+    		'id_area' => $this->input->post('id_area', TRUE)
+		);
+    	$data = array('estatus' => '1',);
+		$this->db->where($arrayWhere)->update('pat_revxarevisar', $data); 
+		$afftectedRows = $this->db->affected_rows();		
+		if ($afftectedRows)
+			return $id_rev;
+		else
+			return false;
+    }
+
+    function revision_btn_revizado_m(){
+    	$idmarca = $this->session->userdata("idmarca");
+    	$data = array(
+    		'id_creater' => $idmarca,
+			'id_rev' => $this->input->post('id_rev', TRUE),				
+			'info' => 'Revisar/validar',	
+			'check' => '0',				
+			'estatus' => '0',
+			'date_created' => date("Y-m-d H:i:s")
+		);
+		$this->db->insert('pat_rev_alert', $data); //guarda usuario		
+    	$afftectedRows = $this->db->affected_rows();
+		if ($afftectedRows){		
+			$id_alert = $this->db->insert_id();
+			return $this->db->select('*')->get_where('pat_rev_alert', array('id_alert' => $id_alert ) )->row();
+    	}
+    	else
+    		false;
+    }
+
 	function del_revision($id_rev){
     	$data = array('estatus' => '1',);
 		$this->db->where(array('id_rev' => $id_rev))->update('pat_revisiones', $data); 
@@ -221,6 +344,29 @@ class Pat_model extends CI_Model {
 		else
 			return false;
     }
+
+    function revision_check_revizado_m(){
+		$estatus_revisado = $this->input->post('estatus_revisado', TRUE);
+		$id_rev = $this->input->post('id_rev', TRUE);
+		$data = array('estatus_revisado' => $estatus_revisado);
+		$this->db->where(array('id_rev' => $id_rev))->update('pat_revisiones', $data); 
+		$afftectedRows = $this->db->affected_rows();		
+		if ($afftectedRows)
+			return $this->db->select('id_rev, estatus_revisado ')->get_where('pat_revisiones', array('id_rev' => $id_rev ) )->row();
+		else
+			return false;
+	}
+	function revision_check_validado_m(){
+		$estatus_validado = $this->input->post('estatus_validado', TRUE);
+		$id_rev = $this->input->post('id_rev', TRUE);
+		$data = array('estatus_validado' => $estatus_validado);
+		$this->db->where(array('id_rev' => $id_rev))->update('pat_revisiones', $data); 
+		$afftectedRows = $this->db->affected_rows();		
+		if ($afftectedRows)
+			return $this->db->select('id_rev, estatus_validado ')->get_where('pat_revisiones', array('id_rev' => $id_rev ) )->row();
+		else
+			return false;
+	}
 	//MODELOS PARA PRESENTACION EJECUTIVA
 	function data_cat($dato){
 		$query = "SELECT * FROM pat_data_cat WHERE tipo = '$dato' and estatus = 0 ORDER BY orden IS NULL ASC, orden ASC;";
@@ -236,6 +382,14 @@ class Pat_model extends CI_Model {
 	function gets_pres_ejecutiva(){
 		$pat_ano = $this->session->userdata("pat_ano");
 		$query = "SELECT id_pre_eje, pat_pre.id_creater, pre_eje_pat_ano, pre_eje_name,pre_eje_des ,pre_eje_file_type, cat.des as type_des , pre_eje_file_name, pre_eje_file_url,pat_pre.estatus FROM pat_pre_ejecutiva as pat_pre
+		inner join pat_data_cat as cat on cat.id = pat_pre.pre_eje_file_type 
+		WHERE pat_pre.estatus = 0 and pre_eje_pat_ano = $pat_ano; ";
+		return $this->db->query($query)->result();      
+	} 
+
+	function gets_pres_ejecutiva_down_list(){
+		$pat_ano = $this->session->userdata("pat_ano");
+		$query = "SELECT pre_eje_pat_ano as PAT, pre_eje_name as Documento,pre_eje_des as Descripcion FROM pat_pre_ejecutiva as pat_pre
 		inner join pat_data_cat as cat on cat.id = pat_pre.pre_eje_file_type 
 		WHERE pat_pre.estatus = 0 and pre_eje_pat_ano = $pat_ano; ";
 		return $this->db->query($query)->result();      
@@ -332,8 +486,20 @@ class Pat_model extends CI_Model {
     }
 
     //MODELOS PARA MAPA DE RIESGO
+    function get_pats_total_mapa_riesgos(){       
+			$arrayWhere = array('pr.estatus' => 0 , 'pr.pat_activo' => 0 );
+		    return $this->db->select('pr.*,
+		    	(SELECT count(*) FROM pat_mapa_riesgos as riesgos WHERE riesgos.estatus = 0 and riesgos.pat_ano = pr.pat_ano) AS riesgosxpat,
+				(SELECT count(*) FROM pat_mapa_riesgos as riesgos WHERE riesgos.estatus = 0 ) AS riesgosxpat_total ')
+		    ->where($arrayWhere)->order_by("pat_ano", "desc")->get('pat_root AS pr')->result();
+	}
+    function obtner_lista_riesgos_filtro($pat_ano){
+        $query = "SELECT * FROM pat_mapa_riesgos where estatus = 0 and pat_ano = $pat_ano;";
+        return $this->db->query($query)->result();
+    }
    	function obtner_lista_riesgos(){
-        $query = "SELECT * FROM pat_mapa_riesgos where estatus = 0;";
+   		$pat_ano = $this->session->userdata("pat_ano");
+        $query = "SELECT * FROM pat_mapa_riesgos where estatus = 0 and pat_ano = $pat_ano; ";
         return $this->db->query($query)->result();
     }
     function obtner_lista_riesgos_rev($id_rev){  //editada
@@ -342,10 +508,19 @@ class Pat_model extends CI_Model {
         where revxrie.estatus = 0 and revxrie.id_revision = $id_rev;";
         return $this->db->query($query)->result();
     }
+
+    function obtner_lista_areas_rev($id_rev){  //editada
+        $query = "SELECT revxarea.id, revxarea.id_revision, revxarea.id_area , areas.des  
+        FROM pat_revxarevisar as revxarea 
+		 inner join pat_data_cat areas on areas.id = revxarea.id_area
+        where revxarea.estatus = 0 and revxarea.id_revision = $id_rev;";
+        return $this->db->query($query)->result();
+    }
     function add_mapa_riesgos(){
 		$idmarca = $this->session->userdata("idmarca");
 		$data = array(
 			'id_usuario_creador' => $idmarca,
+			'pat_ano' => $this->input->post('id_pat', TRUE),
 			'descripcion' => $this->input->post('descripcion', TRUE),
 			'impacto' => $this->input->post('impacto', TRUE),
 			'probabilidad' => $this->input->post('probabilidad', TRUE),	

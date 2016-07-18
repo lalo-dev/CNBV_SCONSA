@@ -268,7 +268,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th></th>
+                                            <!--th></th-->
                                             <th class="text-center">P/A/C</th>
                                             <th class="text-center">Clave</th>
                                             <th class="text-left">Área a revisar</th>
@@ -284,12 +284,27 @@
                                                 <td><?=$key+1; ?></td> 
                                                 <td class="text-center"><?=$value->prog_adic;?></td>
                                                 <td class="text-center"> <?=$value->clave;?> </td>
-                                                <td><?=$value->area_revizar;?></td> 
+                                                <td>
+                                                    <?php  
+                                                    $id_rev = $value->id_rev;
+                                                    $query = "SELECT revxarea.id, revxarea.id_revision, revxarea.id_area , areas.des 
+                                                     FROM pat_revxarevisar as revxarea
+                                                     inner join pat_data_cat areas on areas.id = revxarea.id_area  
+                                                     where revxarea.estatus = 0 and revxarea.id_revision = $id_rev;";        
+                                                     $array_area_revizar = $this->db->query($query)->result();
+                                                     $content_area_revizar = "S/A";
+                                                    ?>
+                                                    <?php foreach ($array_area_revizar as $key => $value_area_revizar): ?>
+                                                         <?php $content_area_revizar .= $value_area_revizar->des .", ";  ?>
+                                                    <?php endforeach ?>
+                                                    <?php echo $content_area_revizar ?>
+      
+                                                </td> 
                                                 <td class="text-center"><?=$value->periodo_ini;?></td>
                                                 <td class="text-center"><?=$value->periodo_fin;?></td>
                                                 <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Revisar/Validar">
+                                                        <a class="btn btn-warning btn-xs" data-toggle="tooltip" onclick="validarRevision(<?=$value->id_rev;?>)" data-placement="top" title="Revisar/Validar">
                                                             <i class="fa fa-send-o"></i>
                                                         </a>
                                                         <a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_comment_rev_<?=$value->id_rev ?>">
@@ -302,7 +317,7 @@
                                                         <a class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Archivo digitalizado" href="./archivos/curso_taller_SD.tiff">
                                                             <i class="fa fa-cloud-download"></i>
                                                         </a>
-                                                        <button class="btn btn-info btn-xs" type="button" data-toggle="tooltip" data-placement="top" title="Consulta">
+                                                        <button class="btn btn-info btn-xs" type="button" title="Consulta" data-toggle="modal" data-target="#modal_show_revision_<?=$value->id_rev ?>">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                         <a class="btn btn-primary btn-xs" href="<?=URL;?>m1_0_0_form_pat_editar_revision/<?=$pat_ano . '/' .$value->id_rev ?>" type="button" data-toggle="tooltip" data-placement="top" title="Editar">
@@ -532,7 +547,21 @@
                                                     <td class="text-center"><?=$value->clave;?> </td>
                                                     <td class="text-center"><?=$value->instancia;?> </td>
                                                     <td class="text-left"><?=$value->justificacion;?></td>
-                                                    <td class="text-left"><?=$value->area_revizar;?></td>
+                                                    <td class="text-left">
+                                                        <?php  
+                                                        $id_rev = $value->id_rev;
+                                                        $query = "SELECT revxarea.id, revxarea.id_revision, revxarea.id_area , areas.des 
+                                                         FROM pat_revxarevisar as revxarea
+                                                         inner join pat_data_cat areas on areas.id = revxarea.id_area  
+                                                         where revxarea.estatus = 0 and revxarea.id_revision = $id_rev;";        
+                                                         $array_area_revizar = $this->db->query($query)->result();
+                                                         $content_area_revizar = "S/A";
+                                                        ?>
+                                                        <?php foreach ($array_area_revizar as $key => $value_area_revizar): ?>
+                                                             <?php $content_area_revizar .= $value_area_revizar->des .", ";  ?>
+                                                        <?php endforeach ?>
+                                                        <?php echo $content_area_revizar ?>
+                                                    </td>
                                                     <td class="text-left">
                                                         <?=$value->descripcion;?>
                                                     </td>
@@ -550,8 +579,18 @@
                                                     <td><?=$value->muestra;?></td>
                                                     <td><?=$value->universo;?></td>
                                                     <td>
-                                                        <p>1.2 Supervisores beneficiados a traves de acuerdos con entidades supervisadas.</p>
-                                                        <p>1.3 Autorizaciones otorgadas en forma deficiente.</p>
+                                                        <?php  
+                                                        $id_rev = $value->id_rev;
+                                                        $query = "SELECT revxrie.id, revxrie.id_revision, revxrie.id_riesgo, riesgo.descripcion  FROM pat_revxriesgo revxrie
+                                                        inner join pat_mapa_riesgos riesgo on riesgo.id_riesgo = revxrie.id_riesgo 
+                                                        where revxrie.estatus = 0 and revxrie.id_revision = $id_rev;";        
+                                                         $array_riesgo_revizar = $this->db->query($query)->result();
+                                                         $content_riesgo_revizar = "";
+                                                        ?>
+                                                        <?php foreach ($array_riesgo_revizar as $key => $value_riesgo_revizar): ?>
+                                                             <?php $content_riesgo_revizar .= " <p> 1." . ($key+1)  . " " .$value_riesgo_revizar->descripcion ." </p>";  ?>
+                                                        <?php endforeach ?>
+                                                        <?php echo $content_riesgo_revizar ?>
                                                     </td>
                                                     <td class="text-center">
                                                         <p>1</p>
@@ -560,18 +599,18 @@
                                                     <td class="text-center">
                                                         <label class="css-input switch switch-primary">
                                                             <?php if ($value->estatus_revisado == 0): ?>
-                                                                <input type="checkbox"><span></span>
+                                                                <input id="rev_check_revisado_<?= trim($value->id_rev); ?>" onchange="ChangeStatusRevisado('<?= $value->id_rev ?>')" type="checkbox"><span></span>
                                                             <?php else: ?>
-                                                                <input type="checkbox" checked><span></span>
+                                                                <input id="rev_check_revisado_<?= trim($value->id_rev); ?>" onchange="ChangeStatusRevisado('<?= $value->id_rev ?>')" type="checkbox" checked><span></span>
                                                             <?php endif ?> 
                                                         </label>
                                                     </td>
                                                     <td class="text-center">
                                                         <label class="css-input switch switch-primary">
                                                             <?php if ($value->estatus_validado == 0): ?>
-                                                                <input type="checkbox"><span></span>
+                                                                <input id="rev_check_validado_<?= trim($value->id_rev); ?>" onchange="ChangeStatusValidado('<?= $value->id_rev ?>')" type="checkbox"><span></span>
                                                             <?php else: ?>
-                                                                <input type="checkbox" checked><span></span>
+                                                                <input id="rev_check_validado_<?= trim($value->id_rev); ?>" onchange="ChangeStatusValidado('<?= $value->id_rev ?>')" type="checkbox" checked><span></span>
                                                             <?php endif ?>                                                            
                                                         </label>
                                                     </td>
@@ -695,10 +734,10 @@
                                         </a>
                                     </div-->
                                     <div class="col-xs-6 col-sm-2 col-lg-2 col-lg-offset-4">
-                                        <a class="block block-link-hover3 text-center" href="javascript:void(0)">
+                                        <a class="block block-link-hover3 text-center" href="<?=URL;?>m1_0_0_form_pat_down_list/<?=$pat_ano ?>">
                                             <div class="block-content block-content-full">
                                                 <i class="si si-printer fa-4x text-primary"></i>
-                                                <div class="font-w600 push-15-t">Imprimir lista</div>
+                                                <div class="font-w600 push-15-t">Imprimir lista</div> 
                                             </div>
                                         </a>
                                     </div>
@@ -899,6 +938,376 @@
         <?php endforeach ?>
         <!-- END Modal show comment -->
 
+  <?php foreach ($getRevisiones as $key => $value): ?>           
+<!-- MOSTRAR CONSULTA USUARIO AREA -->    
+<!-- Large Modal -->
+        <div class="modal" id="modal_show_revision_<?= trim($value->id_rev); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="block block-themed block-transparent remove-margin-b">
+                        <div class="block-header bg-primary-dark">
+                            <ul class="block-options">
+                                <li>
+                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title">Revision</h3>
+                        </div>
+                        <div class="block-content"> 
+                            <!--p>Puesto: <strong>Título del puesto xxx</strong></p>
+                            <p>Licenciatura: <strong>Título de la licenciatura</strong></p>
+                            <p>Años de experiencia: <strong>10</strong></p-->
+                            <!--?php $search_id_user = trim($value->id_user); ?-->
+                            <div class="block">
+                                <ul class="nav nav-tabs" data-toggle="tabs">
+                                    <li class="active">
+                                        <a href="#search-info_<?= $value->id_rev; ?>">Información</a>
+                                    </li>
+                                </ul>
+                                <div class="block-content tab-content bg-white">
+                                    <!-- Info -->
+                                    <div class="tab-pane fade fade-up in active" id="search-info_<?= $value->id_rev; ?>">
+                                        
+                                                 <div class="content"> 
+                                                    <div class="block">
+                                                        <!-- DATOS GENERALES -->
+                                                        <legend>Revision</legend> 
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->no_revision; ?>&nbsp;
+                                                                <label for="rol_permisos">No. revisión</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->tipo_revision; ?>&nbsp;
+                                                                <label for="rol_permisos">Tipo revisión</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->prog_adic; ?>&nbsp;
+                                                                <label for="rol_permisos">P/A/C</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->clave; ?>&nbsp;
+                                                                <label for="rol_permisos">Clave</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->instancia; ?>&nbsp;
+                                                                <label for="rol_permisos">Instancia</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->justificacion; ?>&nbsp;
+                                                                <label for="rol_permisos">Justificación</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-material form-material-primary">
+                                                                <label for="rol_permisos"><!--Área a revisar--></label>
+                                                            </div>
+                                                            <?php  
+                                                            $id_rev = $value->id_rev;
+                                                            $query = "SELECT revxarea.id, revxarea.id_revision, revxarea.id_area , areas.des 
+                                                             FROM pat_revxarevisar as revxarea
+                                                             inner join pat_data_cat areas on areas.id = revxarea.id_area  
+                                                             where revxarea.estatus = 0 and revxarea.id_revision = $id_rev;";        
+                                                             $array_area_revizar = $this->db->query($query)->result(); 
+                                                            ?>
+                                                             <div class="form-group">
+                                                                <table class="table table-striped table-vcenter table-condensed" id="table_areas">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-center">#</th>
+                                                                            <th class="text-left">Área a revisar</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <?php foreach ($array_area_revizar as $key => $value_area_revizar): ?>
+                                                                            <tr>
+                                                                                <td class="index"><?=$key+1 ?></td> 
+                                                                                <td><?=$value_area_revizar->des ?></td>
+                                                                            </tr>
+                                                                        <?php endforeach ?>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->descripcion; ?>&nbsp;
+                                                                <label for="rol_permisos">Descripción</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->objetivo; ?>&nbsp;
+                                                                <label for="rol_permisos">Objetivo</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->semana_ini; ?>&nbsp;
+                                                                <label for="rol_permisos">Semana Inicio</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->semana_fin; ?>&nbsp;
+                                                                <label for="rol_permisos">Semana Fin</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->ts_revision; ?>&nbsp;
+                                                                <label for="rol_permisos">TS. Revisión</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->ts_hombre; ?>&nbsp;
+                                                                <label for="rol_permisos">TS. Hombre</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->periodo_ini; ?>&nbsp;
+                                                                <label for="rol_permisos">Periodo Revisión Inicio</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->periodo_fin; ?>&nbsp;
+                                                                <label for="rol_permisos">Periodo Revisión Fin</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->aud_precedente; ?>&nbsp;
+                                                                <label for="rol_permisos">Auditoría precedente</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->muestra; ?>&nbsp;
+                                                                <label for="rol_permisos">Muestra</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $value->universo; ?>&nbsp;
+                                                                <label for="rol_permisos">Universo</label>
+                                                            </div>
+                                                        </div><div class="clearfix"></div>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-material form-material-primary">                                                                
+                                                                <label for="rol_permisos"><!--Riesgo--></label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                            <table class="table table-striped table-vcenter table-condensed" id="table_riesgos">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">#</th>
+                                                                        <th class="text-left">Riesgo</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <?php  
+                                                                $id_rev = $value->id_rev;
+                                                                $query = "SELECT revxrie.id, revxrie.id_revision, revxrie.id_riesgo, riesgo.descripcion  FROM pat_revxriesgo revxrie
+                                                                inner join pat_mapa_riesgos riesgo on riesgo.id_riesgo = revxrie.id_riesgo 
+                                                                where revxrie.estatus = 0 and revxrie.id_revision = $id_rev;";        
+                                                                $array_riesgo_revizar = $this->db->query($query)->result();
+                                                                ?>
+                                                                <tbody>
+                                                                    <?php foreach ($array_riesgo_revizar as $key => $value_riesgo_revizar): ?>
+                                                                        <tr>
+                                                                            <td class="index"><?=$key+1 ?></td> 
+                                                                            <td><?=$value_riesgo_revizar->descripcion ?></td>
+                                                                        </tr>
+                                                                    <?php endforeach ?>                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        </div>
+
+                                                        <!--div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->entidad ?>&nbsp;
+                                                                <label for="rol_permisos">Entidad</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->n_expediente ?>&nbsp;
+                                                                <label for="rol_permisos">No. Expediente</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->area ?>&nbsp;
+                                                                <label for="rol_permisos">Área</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->nombre ?>&nbsp;
+                                                                <label for="rol_permisos">Nombre</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->apellidop ?>&nbsp;
+                                                                <label for="rol_permisos">Apellido Paterno</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->apellidom ?>&nbsp;
+                                                                <label for="rol_permisos">Apellido Materno</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->cargo ?>&nbsp;
+                                                                <label for="rol_permisos">Cargo</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->nivel ?>&nbsp;
+                                                                <label for="rol_permisos">Nivel</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->nivel_codigo ?>&nbsp;
+                                                                <label for="rol_permisos">Cod</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-5">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->grado ?>&nbsp;
+                                                                <label for="rol_permisos">Grado</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->grado_codigo ?>&nbsp;
+                                                                <label for="rol_permisos">Cod</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->fecha_nac ?>&nbsp;
+                                                                <label for="rol_permisos">Fecha de nacimiento</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                           
+                                                                <?php if ($info->sexo == 0): ?>
+                                                                Femenino
+                                                                <?php else: ?>
+                                                                Masculino
+                                                                <?php endif ?>
+                                                                &nbsp;
+                                                                <label for="rol_permisos">Sexo</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->rfc ?>&nbsp;
+                                                                <label for="rol_permisos">RFC</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->curp ?>&nbsp;
+                                                                <label for="rol_permisos">curp</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->lugar_nac ?>&nbsp;
+                                                                <label for="rol_permisos">Lugar de nacimiento</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->nacionalidad ?>&nbsp;
+                                                                <label for="rol_permisos">Nacionalidad</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->email_cnbv ?>&nbsp;
+                                                                <label for="rol_permisos">Correo electronico CNBV</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->extension ?>&nbsp;
+                                                                <label for="rol_permisos">Extención</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-2">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->torre ?>&nbsp;
+                                                                <label for="rol_permisos">Torre</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->piso ?>&nbsp;
+                                                                <label for="rol_permisos">Piso</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->coordenada ?>&nbsp;
+                                                                <label for="rol_permisos">Coordenada</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="form-material form-material-primary">
+                                                                <?= $info->red ?>&nbsp;
+                                                                <label for="rol_permisos">Red</label>
+                                                            </div>
+                                                        </div-->
+                      
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                 </div>
+                                    </div><!-- END Info -->
+                          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check"></i> Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Large Modal -->
+        <!-- END MOSTRAR CONSULTA USUARIO AREA -->
+    <?php endforeach; ?>
         <!-- From Right Modal -->
         <div class="modal fade" id="modal_del_all" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-fromright">
@@ -923,6 +1332,36 @@
                     <div class="modal-footer">
                         <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
                         <button class="btn btn-sm btn-danger" id="btn_del_all" type="button"><i class="fa fa-check"></i>Elimnar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END From Right Modal -->
+
+        <!-- From Right Modal -->
+        <div class="modal fade" id="modal_validar_revision" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-fromright">
+                <div class="modal-content">
+                    <div class="block block-themed block-transparent remove-margin-b">
+                        <div class="block-header bg-primary-dark">
+                            <ul class="block-options">
+                                <li>
+                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                </li>
+                            </ul>
+                            <div class="col-md-12 text-center">
+                                <h3 class="block-title">¡Atencion!</h3>
+                            </div>                            
+                        </div>
+                        <div class="block-content">
+                            <strong>
+                                <p>Esta seguro de validar?</p>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-sm btn-warning" id="btn_validar_revision" type="button"><i class="fa fa-check"></i>validar</button>
                     </div>
                 </div>
             </div>

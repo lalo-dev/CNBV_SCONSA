@@ -54,24 +54,6 @@
     </head>
     <body>
         <!-- Page Container -->
-        <!--
-            Available Classes:
-
-            'enable-cookies'             Remembers active color theme between pages (when set through color theme list)
-
-            'sidebar-l'                  Left Sidebar and right Side Overlay
-            'sidebar-r'                  Right Sidebar and left Side Overlay
-            'sidebar-mini'               Mini hoverable Sidebar (> 991px)
-            'sidebar-o'                  Visible Sidebar by default (> 991px)
-            'sidebar-o-xs'               Visible Sidebar by default (< 992px)
-
-            'side-overlay-hover'         Hoverable Side Overlay (> 991px)
-            'side-overlay-o'             Visible Side Overlay by default (> 991px)
-
-            'side-scroll'                Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (> 991px)
-
-            'header-navbar-fixed'        Enables fixed header
-        -->
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
             <!-- Side Overlay-->
             <?php //include_once('sideContent.php'); ?>
@@ -230,27 +212,51 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-11">
                                                 <div class="form-material form-material-primary floating">
                                                     <select class="form-control input-sm" id="area_revizar" name="area_revizar">
                                                         <!--option></option-->
-                                                        <?php foreach($getpat_area_revizar as $row){ 
-                                                            if ($row->des == $get_revision->area_revizar) {
-                                                                echo '<option value="'.$row->id.'" selected>'. $row->des .'</option>';
-                                                            }else{
-                                                                echo '<option value="'.$row->id.' ">'. $row->des .'</option>';
-                                                            }
+                                                        <?php foreach($getpat_area_revizar as $row){                                                             
+                                                                echo '<option value="'.$row->id.' ">'. $row->des .'</option>';                                                            
                                                          } ?>
-                                                        <!--option value="a1">DGs de Supervisión de la CNBV (Proceso de Supervisión, Autorizaciones y Sanciones)</option>
-                                                        <option value="a2">Áreas involucradas (seguimiento)</option>
-                                                        <option value="a3">DG de Prevención de Operaciones con Recursos de Procedencia Ilícita A y B (Proceso de Supervisión)</option>
-                                                        <option value="a4">DG de Visitas de Investigación (Proceso de Soporte Legal)</option>
-                                                        <option value="a5">DG de Normatividad  (Proceso Soporte Legal)</option>
-                                                        <option value="a6">DG de Desarrollo Regulatorio (Proceso de Regulacion)</option-->
-                                                    </select>
+                                                        </select>
                                                     <label for="area_revizar">Área a revisar</label>
                                                 </div>
                                             </div>
+                                            <div class="col-md-1">
+                                                <div class="form-material form-material-primary">
+                                                    <button class="btn btn-success btn-sm push-5-r push-10" id="btn_area" type="button">
+                                                        <i class="fa fa-plus"></i></button>
+                                                    <label for="val-skill4">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <table class="table table-striped table-vcenter table-condensed" id="table_areas">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">#</th>
+                                                        <th class="text-left">Área a revisar</th>
+                                                        <th class="text-center">ACCIONES</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($get_areas_rev as $key => $value): ?>
+                                                        <tr id="tr_area_<?=$value->id_area ?>">
+                                                            <td class="index"><?=$key+1 ?></td> 
+                                                            <td><?=$value->des ?></td>
+                                                            <!--td class="text-center">1</td-->
+                                                            <td class="text-center" > 
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-danger btn-xs" type="button" onclick="delAreaList('<?=$value->id_area; ?>')" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
@@ -472,7 +478,7 @@
                                             <div class="col-xs-12">
                                                 <button class="btn btn-sm btn-primary" id="btn_datos_gen"  type="submit">Actualizar</button>
                                                 <button class="btn btn-sm btn-default" id="btn_datos_cancelar" type="reset">Cancelar</button>
-                                                <a class="btn btn-sm btn-success hidden" id="btn_datos_gen_otro" href="javascript:location.reload()">Guardar otro usuario</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                     
+                                                <a class="btn btn-sm btn-success hidden" id="btn_datos_gen_otro" href="javascript:location.reload()">Guardar otra revisión</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <span class="hidden"  id="load_datos_gen"> <i class="fa fa-cog fa-spin"></i> </span>
                                             </div>
                                         </div>
@@ -542,17 +548,14 @@
             <?php foreach($get_riesgos_rev as $row){ ?>
                 array_clean.push('<?php echo $row->id_riesgo; ?>');                    
             <?php } ?>
-
-            //var txt = $("#ddlViewBy option:selected").text();   //var val = $("#ddlViewBy option:selected").val();
             var parador_prop = check_prop;
-
             $("#btn_riesgo").click(function(){
                 var id_riesgo = $("#riesgo option:selected").val();
                 var value_riesgo = $("#riesgo option:selected").text();
                 var trs =$("#table_riesgos tr").length;
                 //add lista
                 if ($.trim(value_riesgo) != "") {
-                    var nuevaFila='<tr id="tr_riesgo_'+id_riesgo+'"> <td class="text-center">'+(trs)+' </td>';
+                    var nuevaFila='<tr id="tr_riesgo_'+id_riesgo+'"> <td class="index">'+(trs)+' </td>';
                     nuevaFila+='<td>'+value_riesgo+'</td>';
                     nuevaFila+='<td class="text-center" > <div class="btn-group">';
                     nuevaFila+= '<button class="btn btn-danger btn-xs" type="button" onclick="delRiesgoList('+id_riesgo+')" data-toggle="tooltip" data-placement="top" title="Eliminar">';
@@ -561,20 +564,23 @@
                     nuevaFila+= '</div></td>'; 
                     nuevaFila+='</tr>';
                     $("#table_riesgos").append(nuevaFila);
-                };                
-                array_conten.push(id_riesgo);
-                parador_prop[id_riesgo] = ""; //limpiando
-                $('#riesgo option').remove();                
-                $.each(parador_prop, function(index, value) {                     
-                    if ($.trim(value) != "") {
-                        $('#riesgo').append( $("<option></option>").attr("value",index).text(value) );
-                        //console.log(index +' <=> ' +value );
-                    };                    
-                });
-                //$("#id_riesgos_list").val( JSON.stringify(array_conten) );
-                add_riesgo_ajax(id_riesgo); //envio de riesgo
+                };               
+                if (typeof( id_riesgo) == "string") {
+                    array_conten.push(id_riesgo);
+                    parador_prop[id_riesgo] = ""; //limpiando
+                    $('#riesgo option').remove();                
+                    $.each(parador_prop, function(index, value) {                     
+                        if ($.trim(value) != "") {
+                            $('#riesgo').append( $("<option></option>").attr("value",index).text(value) );
+                            //console.log(index +' <=> ' +value );
+                        };                    
+                    });
+                    add_riesgo_ajax(id_riesgo);//envio de riesgo
+                }
+                 
               })
             clean_select();
+
             function clean_select(){
                 $('#riesgo option').remove(); 
                 $.each(array_clean, function(index, value) {                     
@@ -588,6 +594,7 @@
                     };                    
                 });                
             }
+
             function add_riesgo_ajax(riesgo){
                 var revision =  $("#id_rev_form").val();
                 var compensacion = $.trim($("#sup_bandera_url").text() );
@@ -597,38 +604,25 @@
                     type: "post",
                     dataType: 'json',
                     data: {id_revision : revision, id_riesgo : riesgo},
-                    beforeSend:function(){
-                      //$('#modal_del_all').modal('hide');
-                      //$("#id_pres_"+$.trim(id_pres) ).hide();
-                    },
+                    beforeSend:function(){},
                     success:function(data){                        
                         //*
-                        console.log(data);
-                        if (data) {
-                        /*    
-                             if (typeof(parseInt(data) ) === "number") {
-                              $("#id_pres_"+$.trim(data) ).remove();              
-                              var trs = $("#table_esc tbody tr").length;
-                              $("#label_find_esc").text(trs);
-                              $('#modal_del_all').modal('hide');
-                             }else{
-                              alert('Error de datos');
-                             }; */
-                        }else{ //some error
+                        if (data) {}else{ //some error
                           alert('Error Interno, recargue la pagina');
                         };
                         //*
                     }
                 }); 
             }
+
             function delRiesgoList(id){    
                 var tr = $("#tr_riesgo_"+id);
                 var array_refresh = new Array(); //tr.css("background-color","#FF3700");        
                 tr.fadeOut(400, function(){ 
                     tr.remove(); 
+                    reset_table_index();
                 });
-                parador_prop[id] = check_prop_u[id]; 
-          
+                parador_prop[id] = check_prop_u[id];
                 array_conten.splice(array_conten.indexOf(id),1); 
                 $('#riesgo option').remove();                
                 $.each(parador_prop, function(index, value) {                     
@@ -636,15 +630,11 @@
                         $('#riesgo').append( $("<option></option>").attr("value",index).text(value) );
                     };                    
                 });
-                if (array_conten.length > 0) {
-                  //$("#id_riesgos_list").val( JSON.stringify(array_conten) );                  
-                }                
-
-                del_riesgo_ajax(id); //delete riesgo ajax
-                
+                del_riesgo_ajax(id); //delete riesgo ajax                
               }
+
               function reset_table_index(){
-                $('td.index', $("#table_riesgos tbody") ).each(function (i) {
+                $('td:first-child', $("#table_riesgos tbody") ).each(function (i) {
                     $(this).text(i +1);          
                 });
               } 
@@ -660,10 +650,8 @@
                     beforeSend:function(){},
                     success:function(data){                        
                         //*
-
-                        console.log(data);
-                        if (data) {
-                            
+                        //console.log(data);
+                        if (data) {                            
                         }else{ //some error
                           alert('Error Interno, recargue la pagina');
                         };
@@ -671,6 +659,136 @@
                     }
                 }); 
               }
+
+              //FUNCIONES PARA AREAS A REVIZAR
+            var check_prop_a = {};
+            var check_prop_a_u = {};
+            var array_conten_a = new Array();
+            var array_clean_a = new Array();
+            <?php foreach($getpat_area_revizar as $row){ ?>
+            check_prop_a['<?php echo $row->id; ?>'] = '<?php echo $row->des; ?>';
+            check_prop_a_u['<?php echo $row->id; ?>'] = '<?php echo $row->des; ?>';                    
+            <?php } ?>
+            <?php foreach($get_areas_rev as $row){ ?>
+                array_clean_a.push('<?php echo $row->id_area; ?>');                    
+            <?php } ?>
+            var parador_prop_a = check_prop_a;
+            //console.log(array_clean_a)
+            clean_select_area();
+
+            function clean_select_area(){
+                $('#area_revizar option').remove(); 
+                $.each(array_clean_a, function(index, value) {                     
+                    if ($.trim(value) != "") {
+                        parador_prop_a[value] = "";
+                    };                    
+                });
+                //console.log(parador_prop_a)
+                $.each(parador_prop_a, function(index, value) {                     
+                    if ($.trim(value) != "") {
+                        $('#area_revizar').append( $("<option></option>").attr("value",index).text(value) );
+                    };                    
+                });                
+            }
+
+            $("#btn_area").click(function(){
+                var id_area = $("#area_revizar option:selected").val();
+                var value_area = $("#area_revizar option:selected").text();
+                var trs =$("#table_areas tr").length;                
+                if ($.trim(value_area) != "") { //add riesgo en la lista
+                    var nuevaFila='<tr id="tr_area_'+id_area+'"> <td class="index">'+(trs)+' </td>';
+                    nuevaFila+='<td>'+value_area+'</td>';
+                    nuevaFila+='<td class="text-center" > <div class="btn-group">';
+                    nuevaFila+= '<button class="btn btn-danger btn-xs" type="button" onclick="delAreaList('+id_area+')" data-toggle="tooltip" data-placement="top" title="Eliminar">';
+                    nuevaFila+= '<i class="fa fa-times"></i>';
+                    nuevaFila+= '</button>';
+                    nuevaFila+= '</div></td>'; 
+                    nuevaFila+='</tr>';
+                    $("#table_areas").append(nuevaFila);
+                };      
+
+                if (typeof( id_area) == "string") {
+                    array_conten_a.push(id_area);
+                    parador_prop_a[id_area] = ""; 
+                    //limpiando
+                    $('#area_revizar option').remove();                
+                    $.each(parador_prop_a, function(index, value) {                     
+                        if ($.trim(value) != "") {
+                            $('#area_revizar').append( $("<option></option>").attr("value",index).text(value) );
+                        };                    
+                    });
+                    add_area_ajax(id_area); //envio de area
+                };                 
+              })
+
+            function add_area_ajax(area){
+                var revision =  $("#id_rev_form").val();
+                var compensacion = $.trim($("#sup_bandera_url").text() );
+                base_url = compensacion+'PatController/update_revision_areas_revisar_add';
+                  $.ajax({
+                    url: base_url,                    
+                    type: "post",
+                    dataType: 'json',
+                    data: {id_revision : revision, id_area : area},
+                    beforeSend:function(){},
+                    success:function(data){                        
+                        //*
+                        if (data) {}else{ //some error
+                          alert('Error Interno, recargue la pagina');
+                        };
+                        //*
+                    }
+                }); 
+            }
+
+            function delAreaList(id){   
+                var tr = $("#tr_area_"+id);
+                var array_refresh = new Array(); //tr.css("background-color","#FF3700");        
+                tr.fadeOut(400, function(){ 
+                    tr.remove(); 
+                    reset_table_index_area();
+                });
+                parador_prop_a[id] = check_prop_a_u[id];
+                console.log(parador_prop_a)
+                array_conten_a.splice(array_conten_a.indexOf(id),1); 
+                $('#area_revizar option').remove();                
+                $.each(parador_prop_a, function(index, value) {                     
+                    if ($.trim(value) != "") {
+                        $('#area_revizar').append( $("<option></option>").attr("value",index).text(value) );
+                    };                    
+                });                
+                del_area_ajax(id);
+              }
+
+              function reset_table_index_area(){
+                $('td:first-child', $("#table_areas tbody") ).each(function (i) {
+                    $(this).text(i +1);          
+                });
+              }
+
+              function del_area_ajax(area){
+                var revision =  $("#id_rev_form").val();
+                var compensacion = $.trim($("#sup_bandera_url").text() );
+                base_url = compensacion+'PatController/update_revision_areas_revisar_delete';
+                  $.ajax({
+                    url: base_url,                    
+                    type: "post",
+                    dataType: 'json',
+                    data: {id_revision : revision, id_area : area},
+                    beforeSend:function(){},
+                    success:function(data){                        
+                        //*
+                        console.log(data);
+                        if (data) {                           
+                        }else{ //some error
+                          alert('Error Interno, recargue la pagina');
+                        };
+                        //*
+                    }
+                }); 
+              }
+
+
       //end javascript
         </script>
 

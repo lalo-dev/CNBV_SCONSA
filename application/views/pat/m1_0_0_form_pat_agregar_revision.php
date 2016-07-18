@@ -54,24 +54,6 @@
     </head>
     <body>
         <!-- Page Container -->
-        <!--
-            Available Classes:
-
-            'enable-cookies'             Remembers active color theme between pages (when set through color theme list)
-
-            'sidebar-l'                  Left Sidebar and right Side Overlay
-            'sidebar-r'                  Right Sidebar and left Side Overlay
-            'sidebar-mini'               Mini hoverable Sidebar (> 991px)
-            'sidebar-o'                  Visible Sidebar by default (> 991px)
-            'sidebar-o-xs'               Visible Sidebar by default (< 992px)
-
-            'side-overlay-hover'         Hoverable Side Overlay (> 991px)
-            'side-overlay-o'             Visible Side Overlay by default (> 991px)
-
-            'side-scroll'                Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (> 991px)
-
-            'header-navbar-fixed'        Enables fixed header
-        -->
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
             <!-- Side Overlay-->
             <?php //include_once('sideContent.php'); ?>
@@ -212,8 +194,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-11">
                                                 <div class="form-material form-material-primary floating">
+                                                    <input class="form-control input-sm hidden" type="text" value="" id="id_areas_list" name="id_areas_list">
                                                     <select class="form-control input-sm" id="area_revizar" name="area_revizar">
                                                         <!--option></option-->
                                                         <?php foreach($getpat_area_revizar as $row){ 
@@ -229,6 +212,26 @@
                                                     <label for="area_revizar">Área a revisar</label>
                                                 </div>
                                             </div>
+                                            <div class="col-md-1">
+                                                <div class="form-material form-material-primary">
+                                                    <button class="btn btn-success btn-sm push-5-r push-10" id="btn_area" type="button">
+                                                        <i class="fa fa-plus"></i></button>
+                                                    <label for="val-skill4">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <table class="table table-striped table-vcenter table-condensed" id="table_areas">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">#</th>
+                                                        <th class="text-left">Área a revisar</th>
+                                                        <th class="text-center">ACCIONES</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
@@ -487,6 +490,12 @@
         </script>
 
         <script>
+
+        function reset_table_index(tabla){
+            $('td:first-child', $("#"+tabla+" tbody") ).each(function (i) {
+                $(this).text(i +1);          
+            });
+          } 
             var check_prop = {};
             var check_prop_u = {};
             var array_conten = new Array();
@@ -494,83 +503,46 @@
                 check_prop['<?php echo $row->id_riesgo; ?>'] = '<?php echo $row->descripcion; ?>';
                 check_prop_u['<?php echo $row->id_riesgo; ?>'] = '<?php echo $row->descripcion; ?>';                    
             <?php } ?>
-            //var txt = $("#ddlViewBy option:selected").text();   //var val = $("#ddlViewBy option:selected").val();
             var parador_prop = check_prop;
-
             $("#btn_riesgo").click(function(){
                 var id_riesgo = $("#riesgo option:selected").val();
                 var value_riesgo = $("#riesgo option:selected").text();
-                var trs =$("#table_riesgos tr").length;
-                //add lista
-                if ($.trim(value_riesgo) != "") {
+                var trs =$("#table_riesgos tr").length;                
+                if ($.trim(value_riesgo) != "") { //add riesgo en la lista
                     var nuevaFila='<tr id="tr_riesgo_'+id_riesgo+'"> <td class="text-center">'+(trs)+' </td>';
                     nuevaFila+='<td>'+value_riesgo+'</td>';
-                    //nuevaFila+='<td class="text-center">'+'1'+'</td>';
-
                     nuevaFila+='<td class="text-center" > <div class="btn-group">';
                     nuevaFila+= '<button class="btn btn-danger btn-xs" type="button" onclick="delRiesgoList('+id_riesgo+')" data-toggle="tooltip" data-placement="top" title="Eliminar">';
                     nuevaFila+= '<i class="fa fa-times"></i>';
                     nuevaFila+= '</button>';
                     nuevaFila+= '</div></td>'; 
-
                     nuevaFila+='</tr>';
                     $("#table_riesgos").append(nuevaFila);
                 };                
+                if (typeof( id_riesgo) == "string") {
+                    array_conten.push(id_riesgo);
+                    parador_prop[id_riesgo] = ""; 
+                    //limpiando
+                    $('#riesgo option').remove();                
+                    $.each(parador_prop, function(index, value) {                     
+                        if ($.trim(value) != "") {
+                            $('#riesgo').append( $("<option></option>").attr("value",index).text(value) );
+                        };                    
+                    });
+                    $("#id_riesgos_list").val( JSON.stringify(array_conten) );
+                };
                 
-                //console.log(id_riesgo);
-                array_conten.push(id_riesgo);
-                parador_prop[id_riesgo] = ""; //limpiando
-                $('#riesgo option').remove();                
-                $.each(parador_prop, function(index, value) {                     
-                    if ($.trim(value) != "") {
-                        $('#riesgo').append( $("<option></option>").attr("value",index).text(value) );
-                        //console.log(index +' <=> ' +value );
-                    };                    
-                });
-                //$("#riesgo option[value='"+id_riesgo+"']").remove(); //eliminando
-                $("#id_riesgos_list").val( JSON.stringify(array_conten) );
-                return false;
-
-                var array_refresh = new Array(); //array para refrescar autocomplete              
-                var in_status = 0;
-                var in_prop = $("#tags_propiedad").val();                
-                  if ($.trim(in_prop) != "") {
-                    for (var i in parador_prop) {
-                      if (parador_prop.hasOwnProperty(i)) {
-                          if ($.trim(in_prop) == $.trim(parador_prop[i]) ) {
-                            in_status = 1;
-                            $('#table_propied tbody').append('<tr id="id'+i+'"><td>'+parador_prop[i]+'</td><td><button type="button" class="btn btn-danger btn-flat remove_list" onclick="re_add_lista('+i+')" aria-label="Close"> <i class="fa fa-times"></i> </button></td></tr>');
-                            parador_prop[i] = ""; //limpiar id propiedad
-                            array_conten.push(i); //add id propiedad                            
-                            $("#id_propiedad_list").val('');//add to input
-                            if (array_conten.length > 0) {
-                              var cont_num = ''
-                              $.each(array_conten, function(index, value) {
-                                cont_num += ','+ value;  
-                              });                     
-                              $("#id_propiedad_list").val( JSON.stringify(array_conten) );
-                            }
-                            $.each(parador_prop, function(index, value) {
-                                array_refresh.push(value); 
-                            });
-                            $( "#tags_propiedad" ).val('');
-                            $( "#tags_propiedad" ).autocomplete({ //rellenar
-                              source: array_refresh
-                            });
-                          }                     
-                      }
-                    }
-                  }else{ //peticion vacia
-
-                  };
+                
               })
 
             function delRiesgoList(id){    
                 var tr = $("#tr_riesgo_"+id);
                 var array_refresh = new Array(); //tr.css("background-color","#FF3700");        
-                tr.fadeOut(400, function(){ tr.remove(); });
-                parador_prop[id] = check_prop_u[id]; 
-          
+                tr.fadeOut(400, function(){ 
+                    tr.remove(); 
+                    reset_table_index("table_riesgos");
+                });
+                parador_prop[id] = check_prop_u[id];
                 array_conten.splice(array_conten.indexOf(id),1); 
                 $('#riesgo option').remove();                
                 $.each(parador_prop, function(index, value) {                     
@@ -582,6 +554,69 @@
                   $("#id_riesgos_list").val( JSON.stringify(array_conten) );                  
                 }
               }
+
+              //FUNCIONES PARA LISTA DE AREAS A REVIZAR
+            var check_prop_a = {};
+            var check_prop_a_u = {};
+            var array_conten_a = new Array();
+            <?php foreach($getpat_area_revizar as $row){ ?>
+                check_prop_a['<?php echo $row->id; ?>'] = '<?php echo $row->des; ?>';
+                check_prop_a_u['<?php echo $row->id; ?>'] = '<?php echo $row->des; ?>';                    
+            <?php } ?>
+            var parador_prop_a = check_prop_a;
+             $("#btn_area").click(function(){
+                var id_area = $("#area_revizar option:selected").val();
+                var value_area = $("#area_revizar option:selected").text();
+                var trs =$("#table_areas tr").length;                
+                if ($.trim(value_area) != "") { //add riesgo en la lista
+                    var nuevaFila='<tr id="tr_area_'+id_area+'"> <td class="text-center">'+(trs)+' </td>';
+                    nuevaFila+='<td>'+value_area+'</td>';
+                    nuevaFila+='<td class="text-center" > <div class="btn-group">';
+                    nuevaFila+= '<button class="btn btn-danger btn-xs" type="button" onclick="delAreaList('+id_area+')" data-toggle="tooltip" data-placement="top" title="Eliminar">';
+                    nuevaFila+= '<i class="fa fa-times"></i>';
+                    nuevaFila+= '</button>';
+                    nuevaFila+= '</div></td>'; 
+                    nuevaFila+='</tr>';
+                    $("#table_areas").append(nuevaFila);
+                };      
+
+                if (typeof( id_area) == "string") {
+                   array_conten_a.push(id_area);
+                    parador_prop_a[id_area] = "";  
+
+                    //limpiando
+                    $('#area_revizar option').remove();                
+                    $.each(parador_prop_a, function(index, value) {                     
+                        if ($.trim(value) != "") {
+                            $('#area_revizar').append( $("<option></option>").attr("value",index).text(value) );
+                        };                    
+                    });
+                    $("#id_areas_list").val( JSON.stringify(array_conten_a) );
+                };
+
+                 
+              })
+
+            function delAreaList(id){    
+                var tr = $("#tr_area_"+id);
+                var array_refresh = new Array(); //tr.css("background-color","#FF3700");        
+                tr.fadeOut(400, function(){ 
+                    tr.remove(); 
+                    reset_table_index("table_areas");
+                });
+                parador_prop_a[id] = check_prop_a_u[id];
+                array_conten_a.splice(array_conten_a.indexOf(id),1); 
+                $('#area_revizar option').remove();                
+                $.each(parador_prop_a, function(index, value) {                     
+                    if ($.trim(value) != "") {
+                        $('#area_revizar').append( $("<option></option>").attr("value",index).text(value) );
+                    };                    
+                });
+                if (array_conten_a.length > 0) {
+                  $("#id_areas_list").val( JSON.stringify(array_conten_a) );                  
+                }
+              }
+
       //end javascript
         </script>
 

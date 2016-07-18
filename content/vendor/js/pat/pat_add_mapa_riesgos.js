@@ -108,7 +108,9 @@ var initValidationCatAreas = function(){
   function addmap_confirm(){
     form = $("#form_map");
     //base_url = 'PatController/add_m50_4_catalogo';
-    base_url = 'PatController/m1_4_mapa_riesgos_form_add';
+    var compensacion = $.trim($("#sup_bandera_url").text() );
+    console.log(compensacion);
+    base_url = compensacion+'PatController/m1_4_mapa_riesgos_form_add';
     $.ajax({
       url: base_url,                    
       type: "post",
@@ -219,7 +221,8 @@ var initValidationCatAreas = function(){
       $('#modal_del_all').modal('show');
     }
     function delCatalogo(id_cat){ //g //Eliminar catalogo  
-      base_url = 'PatController/delete_m1_4_mapa_riesgos_form/'+id_cat; 
+      var compensacion = $.trim($("#sup_bandera_url").text() );
+      base_url = compensacion+'PatController/delete_m1_4_mapa_riesgos_form/'+id_cat; 
       $.ajax({
         url: base_url,                    
         type: "post",
@@ -326,7 +329,8 @@ var initValidationCatAreas = function(){
         }).disableSelection;
 
       function sortable_mysql(id_cat, pos){ //g
-          base_url = 'PatController/sortable_mysql';
+        var compensacion = $.trim($("#sup_bandera_url").text() );
+          base_url = compensacion+'PatController/sortable_mysql';
           $.ajax({
             url: base_url,                    
             type: "post",

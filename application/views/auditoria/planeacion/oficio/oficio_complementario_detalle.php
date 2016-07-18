@@ -84,12 +84,12 @@
         <!-- Page Header -->
         <div class="content bg-gray-lighter">
             <div class="row items-push">
-                <div class="col-sm-5">
+                <div class="col-sm-3">
                     <h1 class="page-heading">
                         Detalle <small>Modificaci&oacute;n</small>
                     </h1>
                 </div>
-                <div class="col-sm-7 text-right hidden-xs">
+                <div class="col-sm-9 text-right hidden-xs">
                     <ol class="breadcrumb push-10-t">
                         <li>Auditoría</li>
                         <li>Planeación detallada</li>
@@ -233,7 +233,7 @@
                             <h2 class="push-10">* <span class="h5 font-w400 text-muted">Modificaci&oacute;n del objeto o periodo </span></h2>
                         </div>
 						<div class="row">
-                            <div class="col-md-8 col-md-offset-2">
+                            <div class="col-md-12">
                                 <form class="form-horizontal push-10-t" id="formOfic" onsubmit="return false;" action="" method="post" >
 
 
@@ -275,58 +275,60 @@
                                     <input type="text" id="id_revision" name="id_revision" value="<?= $id_revision; ?>" style="display:none;">
                                     <?php
                                     if (isset($get_registro->id_of_co)){
+
                                         echo '<input type="text" id="id_oficio" name="id_oficio" value="'.$get_registro->id_of_co.'" style="display:none;" >';
                                     }else{
                                         echo '<input type="text" id="id_oficio" name="id_oficio" value="" style="display:none;" >';
                                     }
                                     ?>
                                     <div class="form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-material floating">
-                                                <select class="form-control" id="orden" name="orden" size="1">
-                                                    <option></option>
-                                                    <?php
-                                                    if (isset($get_registro->id_of_co)) {
-                                                        for ($i = 1; $i <= 5; $i++) {
-                                                            if ($get_registro->orden == $i) {
-                                                                echo '<option value="'.$i.'" selected="selected">Orden '.$i.'</option>';
-                                                            } else {
-                                                                echo '<option value="'.$i.'">Orden '.$i.'</option>';
-                                                            }
-                                                        }
-                                                    }else{
-                                                        for ($i = 1; $i <= 5; $i++) {
-                                                            if ($get_registro->orden == $i) {
-                                                                echo '<option value="'.$i.'">Orden '.$i.'</option>';
-                                                            }
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
+                                                <textarea  class="form-control" id="orden" name="orden" rows="2" readonly>DATO SE CARGA DE ORDEN DE AUDITORIA</textarea>
                                                 <label for="orden">Orden</label>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-material floating">
+                                                <select class="form-control" id="auditor" name="auditor" size="1">
+                                                    <option></option>
+                                                    <?php foreach ($get_audit as $key => $valuea): ?>
+                                                        <?php
+                                                        $chek = "";
+                                                        if($valuea->id_user == $get_registro->id_us_auditor){
+                                                            $chek = "selected='selected'";
+                                                            echo "<option value=".$valuea->id_user." ".$chek.">".$valuea->nombre."</option>";
+                                                        }
+                                                        else{
+                                                            echo "<option value=".$valuea->id_user.">".$valuea->nombre."</option>";
+                                                        }
+                                                        ?>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <label for="auditor">Usuario Auditor</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">&nbsp;</div>
+                                        <div class="col-md-4">
+                                            <div class="form-material floating">
+                                                <?php
+                                                if (isset($get_registro->id_of_co)){
+                                                    echo '<input type="text" class="js-datepicker form-control" data-date-format="yyyy/mm/dd" id="fecha2" name="fecha2" value="'.$get_registro->fecha.'">';
+                                                }else{
+                                                    echo '<input type="text" class="js-datepicker form-control" data-date-format="yyyy/mm/dd" id="fecha2" name="fecha2" value="">';
+                                                }
+                                                ?>
+                                                <label for="fecha2">Fecha</label>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-4">
                                             <div class="form-material floating">
                                                 <select class="form-control" id="objeto" name="objeto" size="1">
                                                     <option></option>
-                                                    <?php
-                                                    if (isset($get_registro->objeto)) {
-                                                        for ($i = 1; $i <= 5; $i++) {
-                                                            if ($get_registro->objeto == $i) {
-                                                                echo '<option value="'.$i.'" selected="selected">objeto '.$i.'</option>';
-                                                            } else {
-                                                                echo '<option value="'.$i.'">objeto '.$i.'</option>';
-                                                            }
-                                                        }
-                                                    }else{
-                                                        for ($i = 1; $i <= 5; $i++) {
-                                                            if ($get_registro->objeto == $i) {
-                                                                echo '<option value="'.$i.'">objeto '.$i.'</option>';
-                                                            }
-                                                        }
-                                                    }
-                                                    ?>
+                                                    <option value="1">Modificación del objeto</option>
+                                                    <option value="2">Periodo a revisar de la auditoría</option>
+                                                    <option value="2">Visita de inspección o revisión</option>
                                                 </select>
                                                 <label for="objeto">Objeto / Periodo</label>
                                             </div>
@@ -334,27 +336,33 @@
 										<div class="col-md-4">
                                             <div class="form-material floating">
                                                 <select class="form-control" id="revisar" name="revisar" size="1">
-                                                    <option></option><!-- Empty value for demostrating material select box -->
-                                                    <?php
-                                                    if (isset($get_registro->revisar)) {
-                                                        for ($i = 1; $i <= 5; $i++) {
-                                                            if ($get_registro->revisar == $i) {
-                                                                echo '<option value="'.$i.'" selected="selected">revisar '.$i.'</option>';
-                                                            } else {
-                                                                echo '<option value="'.$i.'">revisar '.$i.'</option>';
-                                                            }
+                                                    <option></option>
+                                                    <?php foreach ($get_revisar as $key => $valuea): ?>
+                                                        <?php
+                                                        $chek = "";
+                                                        if($valuea->id == $get_registro->id_revisar){
+                                                            $chek = "selected='selected'";
+                                                            echo "<option value=".$valuea->id." ".$chek.">".$valuea->des."</option>";
                                                         }
-                                                    }else{
-                                                        for ($i = 1; $i <= 5; $i++) {
-                                                            if ($get_registro->revisar == $i) {
-                                                                echo '<option value="'.$i.'">revisar '.$i.'</option>';
-                                                            }
+                                                        else{
+                                                            echo "<option value=".$valuea->id.">".$valuea->des."</option>";
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
+                                                    <?php endforeach; ?>
                                                 </select>
                                                 <label for="revisar">Revisar</label>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <select class="form-control" id="fundamento" name="fundamento" size="1">
+                                                <option></option>
+                                                <option value="1">Fundamento 1</option>
+                                                <option value="2">Fundamento 2</option>
+                                                <option value="3">Fundamento 3</option>
+                                            </select>
+                                            <label for="fundamento">Fundamentos</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -373,6 +381,7 @@
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="form-material floating">
+
                                                 <?php
                                                 if (isset($get_registro->id_of_co)){
                                                     echo '<textarea class="form-control" id="ob_period" name="ob_period" rows="3">'.$get_registro->ob_period.'</textarea><label for="ob_period">Objeto / Periodo:</label>';
@@ -397,173 +406,7 @@
                        
                     </div>
                     <!-- END Modificaciones -->
-					
-                    <!-- Validaciones -->
-                    <div class="tab-pane fade fade-up" id="search-validaciones">
-                        <div class="border-b push-30">
-                            <h2 class="push-10">5 <span class="h5 font-w400 text-muted">Validaciones encontrados</span></h2>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-condensed">
-                                <thead>
-                                <tr>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="No. Revisión">#</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Tipo de revisión">Tipo</th>
-                                    <th class="text-left" data-toggle="tooltip" data-placement="top" title="Programada / Adicional">P/A</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Clave Programa">Clave</th>
-                                    <th class="text-center">Instancia</th>
-                                    <th class="text-left">Justificación</th>
-                                    <th class="text-left" data-toggle="tooltip" data-placement="top" title="Área a Revisar">Área</th>
-                                    <th class="text-left">Descripción</th>
-                                    <th class="text-left">Objetivo</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Semana Programada de Inicio">S.P.I.</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Semanan Programada de Término">S.P.T.</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Total Semanas Revisión">T.S.R.</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Total Semanas Hombre">T.S.H.</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Periodo de Revisión Inicio">P.R.I.</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Periodo de Revisión Fin">P.R.F.</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Auditoria Procedente">A.P.</th>
-                                    <th class="text-center">Muestra</th>
-                                    <th class="text-center">Universo</th>
-                                    <th class="text-left">Riesgos</th>
-                                    <th class="text-left">Cuadrante</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Revisado">R</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Validado">V</th>
-                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="Comentarios">C</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="info">
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">Auditoria</td>
-                                    <td class="text-center">P</td>
-                                    <td class="text-center">700</td>
-                                    <td class="text-center">OIC</td>
-                                    <td class="text-left">ÁREAS CRÍTICAS PROCLIVES A CORRUPCIÓN</td>
-                                    <td class="text-left">DGs de Supervisión de la CNBV (Proceso de Supervisión, Autorizaciones y Sanciones)</td>
-                                    <td class="text-left">
-                                        Evaluar que el control interno establecido en las áreas sustantivas de la CNBV respecto a los procesos de la supervisión, autorizaciones y sanciones de las Vicepresidencias de Supervisión de Grupos e Intermediarios Financieros A y B, Banca de Desarrollo y Finanzas Populares y Supervisión Bursátil; asi como la alineación con la Dirección General de Métodos y Procesos de Supervisión ; la coordinación con las Direcciones Generales de Autorizaciones al Sistema Financiero y de Autorizaciones Especializadas y la Dirección General de Delitos y Sanciones; además de la interacción con las áreas soporte de las Vicepresidencias Técnica y de Supervisión de Procesos Preventivos, se haya efectuado de conformidad con el marco legal aplicable y que los resultados hayan sido debidamente informados.
-                                    </td>
-                                    <td class="text-left">
-                                        Verificar el cumplimiento de los procesos de supervisión, autorizaciones y sanciones de las Vicepresidencias de Supervisión de Grupos e Intermediarios Financieros A y B, Banca de Desarrollo y Finanzas Populares y Supervisión Bursátil; asi como la alineación con la Dirección General de Métodos y Procesos de Supervisión; la coordinación con las Direcciones Generales de Autorizaciones al Sistema Financiero y de Autorizaciones Especializadas y la Dirección General de Delitos y Sanciones; además de la interacción con las áreas soporte de las Vicepresidencias Técnica y de Supervisión de Procesos Preventivos, conforme al marco legal aplicable y que los resultados hayan sido informados.
-                                    </td>
-                                    <td>1</td>
-                                    <td>26</td>
-                                    <td>26</td>
-                                    <td>193</td>
-                                    <td>01/01/2013</td>
-                                    <td>31/12/2013</td>
-                                    <td>0/0</td>
-                                    <td>Se determinará en la auditoría.</td>
-                                    <td>100%</td>
-                                    <td>
-                                        <p>1.2 Supervisores beneficiados a traves de acuerdos con entidades supervisadas.</p>
-                                        <p>1.3 Autorizaciones otorgadas en forma deficiente.</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p>1</p>
-                                        <p>1</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <label class="css-input switch switch-primary">
-                                            <input type="checkbox"><span></span>
-                                        </label>
-                                    </td>
-                                    <td class="text-center">
-                                        <label class="css-input switch switch-primary">
-                                            <input type="checkbox" checked><span></span>
-                                        </label>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-small">
-                                            <i class="fa fa-commenting-o"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td class="text-center">Auditoria</td>
-                                    <td class="text-center">P</td>
-                                    <td class="text-center">700</td>
-                                    <td class="text-center">OIC</td>
-                                    <td class="text-left">ÁREAS CRÍTICAS PROCLIVES A CORRUPCIÓN</td>
-                                    <td class="text-left">DGs de Supervisión de la CNBV (Proceso de Supervisión, Autorizaciones y Sanciones)</td>
-                                    <td class="text-left">
-                                        Evaluar que el control interno establecido en las áreas sustantivas de la CNBV respecto a los procesos de la supervisión, autorizaciones y sanciones de las Vicepresidencias de Supervisión de Grupos e Intermediarios Financieros A y B, Banca de Desarrollo y Finanzas Populares y Supervisión Bursátil; asi como la alineación con la Dirección General de Métodos y Procesos de Supervisión ; la coordinación con las Direcciones Generales de Autorizaciones al Sistema Financiero y de Autorizaciones Especializadas y la Dirección General de Delitos y Sanciones; además de la interacción con las áreas soporte de las Vicepresidencias Técnica y de Supervisión de Procesos Preventivos, se haya efectuado de conformidad con el marco legal aplicable y que los resultados hayan sido debidamente informados.
-                                    </td>
-                                    <td class="text-left">
-                                        Verificar el cumplimiento de los procesos de supervisión, autorizaciones y sanciones de las Vicepresidencias de Supervisión de Grupos e Intermediarios Financieros A y B, Banca de Desarrollo y Finanzas Populares y Supervisión Bursátil; asi como la alineación con la Dirección General de Métodos y Procesos de Supervisión; la coordinación con las Direcciones Generales de Autorizaciones al Sistema Financiero y de Autorizaciones Especializadas y la Dirección General de Delitos y Sanciones; además de la interacción con las áreas soporte de las Vicepresidencias Técnica y de Supervisión de Procesos Preventivos, conforme al marco legal aplicable y que los resultados hayan sido informados.
-                                    </td>
-                                    <td>1</td>
-                                    <td>26</td>
-                                    <td>26</td>
-                                    <td>193</td>
-                                    <td>01/01/2013</td>
-                                    <td>31/12/2013</td>
-                                    <td>0/0</td>
-                                    <td>Se determinará en la auditoría.</td>
-                                    <td>100%</td>
-                                    <td>
-                                        <p>1.2 Supervisores beneficiados a traves de acuerdos con entidades supervisadas.</p>
-                                        <p>1.3 Autorizaciones otorgadas en forma deficiente.</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p>1</p>
-                                        <p>1</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <label class="css-input switch switch-primary">
-                                            <input type="checkbox"><span></span>
-                                        </label>
-                                    </td>
-                                    <td class="text-center">
-                                        <label class="css-input switch switch-primary">
-                                            <input type="checkbox" checked><span></span>
-                                        </label>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-primary btn-sm">
-                                            <i class="fa fa-commenting-o"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                    </div>
-                    <!-- END Revisiones -->
-                    <!-- Settings -->
-                    <div class="tab-pane" id="btabs-alt-static-settings">
-                        <h4 class="font-w300 push-15">Opciones</h4>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-2 col-lg-2 col-lg-offset-3">
-                                <a class="block block-link-hover3 text-center" href="javascript:void(0)">
-                                    <div class="block-content block-content-full">
-                                        <i class="si si-list fa-4x text-primary"></i>
-                                        <div class="font-w600 push-15-t">Ordenar</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-xs-6 col-sm-2 col-lg-2">
-                                <a class="block block-link-hover3 text-center" href="javascript:void(0)">
-                                    <div class="block-content block-content-full">
-                                        <i class="si si-printer fa-4x text-primary"></i>
-                                        <div class="font-w600 push-15-t">Imprimir lista</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-xs-6 col-sm-2 col-lg-2">
-                                <a class="block block-link-hover3 text-center" href="#">
-                                    <div class="block-content block-content-full">
-                                        <i class="si si-doc fa-4x text-primary"></i>
-                                        <div class="font-w600 push-15-t">Agregar Revisión</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END Settings -->
                 </div>
             </div>
         </div>
@@ -601,7 +444,7 @@
     </div>
     <!-- Modal confirmacion catalogo -->
     <!-- From Right Modal -->
-    <div class="modal fade" id="modal_del_all" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_msn" data-dismiss="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-fromright">
             <div class="modal-content">
                 <div class="block block-themed block-transparent remove-margin-b">
@@ -612,18 +455,17 @@
                             </li>
                         </ul>
                         <div class="col-md-12 text-center">
-                            <h3 class="block-title">¡Atencion!</h3>
+                            <h3 class="block-title">¡Alerta!</h3>
                         </div>
                     </div>
                     <div class="block-content">
                         <strong>
-                            <p>Esta seguro de eliminar?</p>
+                            <p id="msj"> </p>
                         </strong>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-sm btn-danger" id="btn_del_all" type="button"><i class="fa fa-check"></i>Elimnar</button>
+                    <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -689,8 +531,8 @@
 
             //add oficio
         $("#addoc_confirm").click(function (){ //confirma
-            //console.log("boton registrar");
 
+            //console.log($("#formOfic").serialize());
             jQuery('#formOfic').validate({  //valida
                 ignore: [],
                 errorClass: 'help-block animated fadeInDown',
@@ -713,12 +555,14 @@
                 'objeto': { required: true },
                 'revisar': { required: true },
                 'motivo': { required: true },
+                'fundamento': { required: true },
                 'ob_period': { required: true }
                 },messages: {
                     orden: "Campo orden requerido",
                     objeto: "Campo objeto requerido",
                     revisar: "Campo revisar requerido",
                     motivo: "Campo motivo requerido",
+                    fundamento: "Campo fundamento requerido",
                     ob_period: "Campo objeto / periodo requerido"
                 },
                 submitHandler: function(form){
@@ -741,27 +585,23 @@
             dataType: 'json',
             data: $(form).serialize(),
             beforeSend:function(){
-
-                $( "#addoc_confirm" ).prop( "disabled", true );
-                $( "#addoc_confirm_can" ).prop( "disabled", true );
+                //$( "#addoc_confirm" ).prop( "disabled", true );
+                //$( "#addoc_confirm_can" ).prop( "disabled", true );
             },
             success:function(data){
                 //console.log(data);
+                $("#id_oficio").val(data.id_of_co);
 
-                if(data == "add"){
-                    alert("Registro agregado correctamente");
-                    $( "#load_datos" ).addClass( "hidden" );
-                    //$( "#addoc_confirm_can" ).prop( "disabled", false ); //abiltiar cancelar
-                    //$( "#addoc_confirm" ).prop( "disabled", false ); //abiltiar botone guardar
-                    //$("#id_oficio").val(''); //limpiando variable de update
-                    //form.reset(); //reseteo de campos
+                if(data.oper == "add"){
+                    //alert("Registro agregado correctamente");
+                    $("#load_datos").addClass("hidden");
+                    $("#msj").text("Registro agregado correctamente");
+                    $("#modal_msn").modal('show');
+
                 }else{
-                    alert("Registro actualizado correctamente");
                     $( "#load_datos" ).addClass( "hidden" );
-                    //$( "#addoc_confirm_can" ).prop( "disabled", false ); //abiltiar cancelar
-                    //$( "#addoc_confirm" ).prop( "disabled", false ); //abiltiar botone guardar
-                    //$("#id_oficio").val(''); //limpiando variable de update
-                    //form.reset(); //reseteo de campos
+                    $("#msj").text("Registro actualizado correctamente");
+                    $("#modal_msn").modal('show');
                 }
             },
         });

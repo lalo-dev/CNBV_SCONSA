@@ -11,7 +11,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                         
-                        <a class="h5 text-white" href="dashboard">
+                        <a class="h5 text-white" href="<?=URL ?>dashboard">
                             <i class="fa fa-circle-o-notch text-primary"></i> <span class="h4 font-w600 sidebar-mini-hide">PAKAL AI</span>
                         </a>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="side-content">
                         <ul class="nav-main">
                             <li>
-                                <a class="active submenuCnbv" href="dashboard">
+                                <a class="active submenuCnbv" href="<?=URL ?>dashboard">
                                     <i class="si si-speedometer"></i>
                                     <span class="sidebar-mini-hide">Dashboard</span>
                                 </a>
@@ -37,7 +37,7 @@
                                         <a class="submenuCnbv" href="<?=URL ?>m1_3_presentacion_ejecutiva">Presentación ejecutiva</a>
                                     </li>
                                     <li>
-                                        <a class="submenuCnbv" href="<?=URL ?>m1_4_mapa_riesgos">Mapa de riesgos</a>
+                                        <a class="submenuCnbv" href="<?=URL ?>m1_4_mapa_riesgos_index">Mapa de riesgos</a>
                                     </li>
                                     <li>
                                         <a class="submenuCnbv" href="<?=URL ?>m1_5_semanas_hombre">Semanas hombre</a>
@@ -60,7 +60,7 @@
                                                 <a href="<?= URL.'programa_trabajo'; ?>">Programa de trabajo</a>
                                             </li>
                                             <li>
-                                                <a href="<?= URL.'cronograma'; ?>">Cronograma</a>
+                                                <a href="cronograma">Cronograma</a>
                                             </li>
                                             <li>
                                                 <a href="<?= URL.'orden_auditoria'; ?>">Orden de auditoría</a>
@@ -273,7 +273,7 @@
                                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bar-chart"></i><span class="sidebar-mini-hide">Estadísticas</span></a>
                                     <ul>
                                         <li>
-                                            <a href="m6_1_estadistica_auditorias">Auditorías</a>
+                                            <a href="">Auditorías</a>
                                         </li>
                                         <li>
                                             <a href="">Seguimientos</a>
@@ -295,14 +295,3 @@
             </div>
             <!-- END Sidebar Scroll Container -->
         </nav>
-        <script>
-            //Mostrar que link del menu esta activo
-            $('.submenuCnbv').on('click',function(){
-                //alert('menu');
-                $('.nav-main').find('li, a').removeClass('active');
-                $('.nav-main').find('ul').css({ display: 'none' });
-                $(this).addClass('active');
-                $(this).parent().parent().parent().addClass('active');
-                $(this).parent().parent().css({ display: 'block' });
-            });
-        </script>

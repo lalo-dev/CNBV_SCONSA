@@ -42,13 +42,81 @@ class AuditoriaController extends MY_Controller {
     }
 
     public function get_orden_auditoria(){
-        $data['get_auditorias'] = $this->auditoria_m->get_auditorias();
+        $data['lista_revisiones'] = $this->auditoria_m->get_auditorias();
 		$this->load->view('auditoria/planeacion/orden_auditoria', $data);
     }
-    public function get_orden_auditoria_detalle(){
-        $data['get_auditorias'] = $this->auditoria_m->get_auditorias();
+
+    public function get_orden_auditoria_detalle($id_revision = null){
+        // $data['get_auditorias'] = $this->auditoria_m->get_auditorias();
+        $data['id_revision'] = $id_revision;
         $this->load->view('auditoria/planeacion/orden_auditoria_detalle', $data);
     }
+
+    public function set_comentario(){
+        $data = array(
+            'coment' => $this->input->post('comentario'),
+            'idRev'=>  $this->input->post('id_revision')
+            );
+
+        $this->auditoria_m->set_comentario($data['coment'], $data['idRev']);
+
+        echo json_encode("ok");
+    }
+
+    public function get_comentarios(){
+        $data = array(
+            'idRev'=>  $this->input->post('id_revision')
+            );
+
+        echo json_encode($this->auditoria_m->get_comentarios($data['idRev']));
+    }
+
+    //Vista General
+    public function set_general(){
+
+        $data = $this->input->post('gral');
+        $id_general = $this->input->post('id_general');
+
+        echo json_encode( $this->auditoria_m->set_general($data, $id_general));
+    }
+    public function get_general(){
+
+        $id_revision = $this->input->post('id_revision');
+
+        echo json_encode( $this->auditoria_m->get_general($id_revision));
+    }
+
+    public function set_orden(){
+
+        $data = $this->input->post('orden');
+        $firmas = $this->input->post('firmas');
+        $cc = $this->input->post('cc');
+        $id_orden = $this->input->post('id_orden');
+
+        echo json_encode( $this->auditoria_m->set_orden($data, $firmas,$cc, $id_orden));
+    }
+    public function get_orden(){
+
+        $id_revision = $this->input->post('id_revision');
+
+        echo json_encode( $this->auditoria_m->get_orden($id_revision));
+    }
+
+    public function get_cat_firmas(){
+
+
+        echo json_encode( $this->auditoria_m->get_cat_firmas());
+    }
+
+
+
+
+
+
+
+
+
+
 
     public function get_programa_trabajo(){
         $data['get_auditorias'] = $this->auditoria_m->get_auditorias();

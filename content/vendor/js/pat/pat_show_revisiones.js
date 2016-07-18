@@ -109,6 +109,8 @@ var BaseFormValidation = function() {
     });
   }
 
+
+  //codigo basura 
    var addPres_basura = function(data){ //http://www.lawebdelprogramador.com/codigo/JQuery/2279-Anadir-y-eliminar-filas-de-una-tabla-con-jquery.html
       file_type = $("#pre_eje_file_type option[value='"+data.pre_eje_file_type+"']").text();
       //console.log(file_type);
@@ -164,12 +166,12 @@ var BaseFormValidation = function() {
       };
     }
     
-    function delPrespar(id_pres){ //modal delete escolaridad
+    function delPrespar(id_pres){ //modal delete validacion
       $('#btn_del_all').attr('onClick', 'delPres('+id_pres+');');
       $('#modal_del_all').modal('show');
     }
 
-    function delPres(id_pres){ //Eliminar escolaridad
+    function delPres(id_pres){ //Eliminar validacion
       var compensacion = $.trim($("#sup_bandera_url").text() );    
       base_url = compensacion+'PatController/m1_0_0_form_pat_revision_commit_del/'+id_pres;
       $.ajax({
@@ -200,81 +202,115 @@ var BaseFormValidation = function() {
     });  
     }
 
-  function addpresentacion_confirm_files(){     
-      var compensacion = $.trim($("#sup_bandera_url").text() );
-      //img_vista_form = compensacion + "content/blogs/blank.png"; //reset img vista
-      //$(".img_vista_form").prop("src", img_vista_form);
-      var id_pres = $("#id_pres_form").val();
-      if (id_pres == "") { return false;   }; 
-
-      var base_url = compensacion+'PatController/adm_pres_Form_files/'+id_pres;
-      //var base_url = '../PatController/adm_pres_Form_files/'+id_pres;
-      var data = new FormData();
-      var cont = 0;
-      jQuery.each(jQuery('#file1')[0].files, function(i, file) {
-          data.append('img1', file); cont = 1;          
-      }); 
-      if (cont == 0) { //console.log("sin archivos");
-        return false;        
-      };
-      $("#file1").val(''); //limpiando file
+    function validarRevision(id_val){
+      $('#btn_validar_revision').attr('onClick', 'addValidacion('+id_val+');');
+      $('#modal_validar_revision').modal('show');
+    }
+    function addValidacion(id_val){
+      console.log(id_val);
+       //Eliminar validacion
+      var compensacion = $.trim($("#sup_bandera_url").text() );    
+      base_url = compensacion+'PatController/revision_btn_revizado';
       $.ajax({
-        url: base_url,        
+        url: base_url,                    
         type: "post",
-        contentType: 'multipart/form-data',
-        cache: false,
-        contentType: false,
-        processData: false,
         dataType: 'json',
-        data:  data,
-        beforeSend:function(){
-          if ($("#label_load_file").hasClass('hidden')) {
-            $("#label_load_file").removeClass('hidden')
-          };
-          //console.log("enviado");
+        data: {id_rev : id_val},
+        beforeSend:function(){    //console.log("eiminado");
+          $('#modal_validar_revision').modal('hide');
+          //$("#id_pres_"+$.trim(id_pres) ).hide();
         },
-        success:function(data){
-             if (!$("#label_load_file").hasClass('hidden')) {
-              $("#label_load_file").addClass('hidden')
-            };
-            //console.log(data);
-            if (data) {
-              var result = ""
-               if (typeof(data.img1) != 'undefined') {//agregado    
-                 if (typeof(data.img1.Error) != 'undefined') {
-                   result += '<div class="col-md-12 text-left ">*'+data.img1.Error+'</div>';
-                 };  
-               }               
-               if (result != "") {
-                $("#show_message_error_file").html(result);
-                $("#modal_message_error_file").modal('show');
-               };
-               //ACCIONES EN EL GUARDADO DE ARCHIVOS
-               if (typeof(data.img1) != 'undefined') {//agregado    
-                 if (typeof(data.img1.pre_eje_file_name) != 'undefined') {
-                   /*nuevaFila='<a class="img-link" href="'+data.img1.base_url+ data.img1.pre_eje_file_url+'">';
-                   nuevaFila+='<img class="img-responsive" src="'+data.img1.base_url+ data.img1.pre_eje_file_url+'" alt="">'
-                   nuevaFila+=' </a>';  //console.log(nuevaFila);
-                   $("#id_blog_imgs_"+ $.trim(data.img1.id_blog) + " .blog_img_1").html(nuevaFila);    */          
-                   //$("#btn_curr").prop( "href", data.img1.base_url+"get_down_file/" + id_blog +"/curr"  );
-                  var row = $("#id_pres_"+$.trim(data.img1.id_pre_eje) );
-                  $(row).find("td:eq(4)").text(data.img1.pre_eje_file_name);                    
-                    //console.log(row);
-                    //console.log(data.img1.pre_eje_file_url);
-                 };  
-               }
+        success:function(data){                        
+            //*
+            console.log(data)
+            if (data) {    
+                 if (typeof(parseInt(data.id_alert) ) === "number") {
+                  /*
+                  //$("#id_pres_"+$.trim(data) ).remove();
+                  /*var trs =$("#table_revisiones tbody tr").length;
+                  $("#label_find_total_rev").text(trs); 
+                  $('#modal_del_all').modal('hide'); */
+                 }else{
+                  alert('Error de datos');
+                 };
             }else{ //some error
-              alert('Error interno al agregar archivos, recargue la pagina');
+              alert('Error Interno');
             };
-        },error: function(jqXHR, textStatus, errorThrown){// Handle errors here
-          if (!$("#label_load_file").hasClass('hidden')) {
-            $("#label_load_file").addClass('hidden')
-          };
-            //console.log('ERRORS: ' + textStatus);
-            // STOP LOADING SPINNER
+            //*
         }
-    });
-  }
+    });  
+
+    }
+   function ChangeStatusRevisado(identificador){ //cambiar status de revision   
+      var bandera;
+      if ( $("#rev_check_revisado_"+identificador).is(':checked') ) {
+        bandera = 1;
+      }else{
+        bandera = 0;
+      };
+      console.log(bandera);
+      var compensacion = $.trim($("#sup_bandera_url").text() );  
+          base_url = compensacion+'PatController/revision_check_revizado';
+          $.ajax({
+            url: base_url,                    
+            type: "post",
+            dataType: 'json',
+            data: {estatus_revisado : bandera, id_rev : identificador},
+            beforeSend:function(){
+              //console.log("");
+            },
+            success:function(data){                      
+                //*
+                console.log(data);         
+                if (data) {   //console.log(data)
+                  if (data.estatus_revisado == 1) {
+                     $("#rev_check_revisado_"+$.trim(data.id_rev)).prop('checked', true);
+                  }else{
+                     $("#rev_check_revisado_"+$.trim(data.id_rev)).prop('checked', false);
+                  };                
+                }else{ //some error
+                  alert('Error en la pagina, recargue de nuevo');
+                };
+                //*
+            }
+        });   
+          //fin
+      }
+
+      function ChangeStatusValidado(identificador){ //cambiar status de revision   
+      var bandera;
+      if ( $("#rev_check_validado_"+identificador).is(':checked') ) {
+        bandera = 1;
+      }else{
+        bandera = 0;
+      };
+      console.log(bandera);
+      var compensacion = $.trim($("#sup_bandera_url").text() );  
+          base_url = compensacion+'PatController/revision_check_validado';
+          $.ajax({
+            url: base_url,                    
+            type: "post",
+            dataType: 'json',
+            data: {estatus_validado : bandera, id_rev : identificador},
+            beforeSend:function(){},
+            success:function(data){                      
+                //*
+                console.log(data);         
+                if (data) {   //console.log(data)
+                  if (data.estatus_validado == 1) {
+                     $("#rev_check_validado_"+$.trim(data.id_rev)).prop('checked', true);
+                  }else{
+                     $("#rev_check_validado_"+$.trim(data.id_rev)).prop('checked', false);
+                  };                
+                }else{ //some error
+                  alert('Error en la pagina, recargue de nuevo');
+                };
+                //*
+            }
+        });   
+          //fin
+      }
+
 // Initialize when page loads
 jQuery(function(){ BaseFormValidation.init(); });
 

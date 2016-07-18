@@ -1,0 +1,28 @@
+ jx  = function(m, d, s){
+            $.ajax({
+              type: "POST",
+              url: "<?=URL ?>CartaPlaneacionController/"+ m,
+              dataType: 'json',
+              data:  (d)?d:null,
+              success: function(res) {
+                s(res);
+              },
+              error: function(res) {
+                console.log("error",res);
+              }
+          });
+        }
+
+
+<!-- <tbody data-bind="source: tab4.plazas" data-template="plaza-temp"></tbody> -->
+
+<script id="plaza-temp" type="text/x-kendo-template">
+                                        <tr>
+                                            <td><input type="Text" data-bind="value:puesto"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir1"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir2"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir3"/></td>
+                                            <td class="text-center"><input type="text" data-bind="value:dir4"/></td>
+                                            <td class="text-center"><button class="btn btn-sm btn-primary" type="button" data-bind="click:deleteFila">Eliminar</button></td>
+                                        </tr>
+                                    </script>

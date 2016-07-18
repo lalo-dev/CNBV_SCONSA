@@ -21,7 +21,7 @@
             <div class="block-header bg-gray-lighter">
                 <ul class="block-options">
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                        <button type="button" data-toggle="block-option" onclick="load_all_alert()" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                     </li>
                     <li>
                         <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
@@ -31,8 +31,8 @@
             </div>
             <div class="block-content">
                 <!-- Activity List -->
-                <ul class="list list-activity">
-                    <li>
+                <ul class="list list-activity" id="list_alert">
+                    <!--li>
                         <i class="si si-pencil text-info"></i>
                         <div class="font-w600">Documento pendiente: (Revisión/Corrección/Validación)</div>
                         <div><a href="javascript:void(0)"><i class="fa fa-file-text-o"></i> Documento.pdf</a></div>
@@ -61,7 +61,7 @@
                         <div class="font-w600">La actividad "Observaciones"</div>
                         <div><small class="text-warning"> vence 12-12-2015</small></div>
                         <div><small class="text-danger"> entrega 12-12-2015</small></div>
-                    </li>
+                    </li-->
                 </ul>
                 <div class="text-center">
                     <small><a href="javascript:void(0)">Leer más..</a></small>
@@ -74,4 +74,9 @@
     <!-- END Side Content -->
     </div>
     <!-- END Side Overlay Scroll Container -->
+    <div id="sup_bandera_url_sitecontet"> <?=URL ?> </div>
+    <script src="<?=URL ?>content/vendor/js/site_content.js"></script>
+    <script type="text/javascript">
+
+    </script>
 </aside>

@@ -101,15 +101,19 @@ $route['blogAdmin'] = 'BlogController/adm_Blog';
 $route['m1_0_pat'] = 'PatController/m1_0_pat';
 $route['m1_0_0_form_nuevo_pat'] = 'PatController/m1_0_0_form_nuevo_pat';
 $route['m1_0_0_form_pat/(:num)'] = 'PatController/m1_0_0_form_pat/$1';
+$route['m1_0_0_form_pat_down_list/(:num)'] = 'PatController/m1_0_0_form_pat_down_list/$1';
 $route['m1_0_0_form_pat_agregar_revision/(:num)'] = 'PatController/m1_0_0_form_pat_agregar_revision/$1';
 $route['m1_0_0_form_pat_editar_revision/(:num)/(:num)'] = 'PatController/m1_0_0_form_pat_editar_revision/$1/$2';
 //ADMINISTRACION DE PRESENTACION EJECUTIVA
 $route['m1_3_presentacion_ejecutiva'] = 'PatController/m1_3_presentacion_ejecutiva';
 $route['m1_3_presentacion_ejecutiva_form'] = 'PatController/m1_3_presentacion_ejecutiva_form';
 $route['get_down_file_planeacion_ejecutiva/(:num)'] = 'PatController/get_down_file/$1';
+$route['m1_3_presentacion_ejecutiva_down_list'] = 'PatController/m1_3_presentacion_ejecutiva_down_list';
 //ADMINISTRACION DE MAPA DE RIESGOS
-$route['m1_4_mapa_riesgos'] = 'PatController/m1_4_mapa_riesgos';
-$route['m1_4_mapa_riesgos_form'] = 'PatController/m1_4_mapa_riesgos_form';
+
+$route['m1_4_mapa_riesgos_index'] = 'PatController/m1_4_mapa_riesgos_index';
+$route['m1_4_mapa_riesgos/(:num)'] = 'PatController/m1_4_mapa_riesgos/$1';
+$route['m1_4_mapa_riesgos_form/(:num)'] = 'PatController/m1_4_mapa_riesgos_form/$1';
 
 //MAPA DE RIESGOS
 //$route['mapa_riesgos']          = 'MapaRiesgosController/index';
@@ -132,16 +136,18 @@ $route['acta_inicio']		= 'AuditoriaController/get_acta_inicio';
 $route['carta_planeacion/(:num)']	        = 'CartaPlaneacionController/get_lista_revisiones/$1';
 $route['carta_planeacion_detalle/(:num)']	= 'CartaPlaneacionController/get_carta_planeacion_detalle/$1';
 
-
-$route['cronograma']		= 'AuditoriaController/get_cronograma';
+        //Cronograma
+$route['cronograma']				= 'CronogramaController/get_cronograma';
 $route['orden_auditoria']	= 'AuditoriaController/get_orden_auditoria';
+$route['orden_auditoria_detallada/(:num)']	= 'AuditoriaController/get_orden_auditoria_detalle/$1';
 $route['programa_trabajo']	= 'AuditoriaController/get_programa_trabajo';
         //Oficio complementario
 $route['ampliacion']			= 'OficiocomplementarioController/get_ampliacion';
 $route['desincorporacion']		= 'OficiocomplementarioController/get_desincorporacion';
 $route['oficio_complementario']	= 'OficiocomplementarioController/get_oficio_complementario';
 $route['oficio_complementario_detalle/(:num)']	= 'OficiocomplementarioController/get_oficio_complementario_detalle/$1';
-$route['oficio_general']		= 'OficiocomplementarioController/get_oficio_general';
+$route['oficio_general']		= 'OficioGneralController/get_oficio_general';
+$route['oficio_general_detalle/(:num)']	= 'OficioGneralController/get_oficio_general_detalle/$1';
 $route['sustitucion']			= 'OficiocomplementarioController/get_sustitucion';
     //Ejecución
 $route['acta_administrativa']			= 'EjecucionController/get_acta_administrativa';

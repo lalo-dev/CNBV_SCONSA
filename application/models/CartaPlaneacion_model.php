@@ -19,7 +19,305 @@ class CartaPlaneacion_model extends CI_Model
         return $this->db->query($query)->result();
     }
 
+    function set_comentario($comentario, $idAudi)
+    {
+        $data = array(
+        'id_auditoria' => $idAudi,
+        'comentario' => $comentario
+        );
+        $this->db->insert('carta_planeacion_chat', $data);
+    }
 
+    function get_comentarios($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_chat where id_auditoria =".$idAudi;
+
+        return $this->db->query($query)->result();
+    }
+
+
+    function set_tab2($data, $idAnt)
+    {
+
+        if($idAnt > 0){
+            $this->db->where('id_anterior', $idAnt);
+            $this->db->update('carta_planeacion_anterior', $data);
+        }else{
+            $this->db->insert('carta_planeacion_anterior', $data);
+            $idAnt = $this->db->insert_id();
+        }
+        return $idAnt;
+        
+    }
+
+     function get_tab2($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_anterior where id_auditoria =".$idAudi;
+
+        return $this->db->query($query)->result();
+    }
+
+    function set_tab3($data, $idDM)
+    {
+
+        if($idDM > 0){
+            $this->db->where('id_DM', $idDM);
+            $this->db->update('carta_planeacion_D_M', $data);
+        }else{
+            $this->db->insert('carta_planeacion_D_M', $data);
+            $idDM = $this->db->insert_id();
+        }
+        return $idDM;
+        
+    }
+
+     function get_tab3($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_D_M where id_auditoria =".$idAudi;
+
+        return $this->db->query($query)->result();
+    }
+
+    function set_tab4($data, $plazas, $idEstrutura)
+    {
+        if($idEstrutura > 0){
+            $this->db->where('id_estructura', $idEstrutura);
+            $this->db->update('carta_planeacion_estructura', $data);
+        }else{
+
+            $this->db->insert('carta_planeacion_estructura', $data);
+            $idEstrutura = $this->db->insert_id();
+            foreach ($plazas as $row)
+            {
+                $plaza = array(
+                      'puesto' => $row['puesto'],
+                      'direccion_grl_1' => $row['dir1'],
+                      'direccion_grl_2' => $row['dir2'],
+                      'direccion_grl_3' => $row['dir3'],
+                      'direccion_grl_4' => $row['dir4'],
+                      'id_estructura' => $idEstrutura
+                    );
+
+               $this->db->insert('carta_planeacion_plazas', $plaza);
+            }
+        }
+        return $idEstrutura;
+        
+    }
+
+     function get_tab4($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_estructura where id_auditoria =".$idAudi;
+
+        $result = $this->db->query($query)->result();
+
+        if(count($result) > 0){
+             $id_estructura = $result[0]->id_estructura;
+
+             $plazasQuery = "SELECT * FROM carta_planeacion_plazas where id_estructura =".$id_estructura;
+
+             $result[0]->plazas = $this->db->query($plazasQuery)->result();
+        }
+
+        return $result;
+    }
+
+    function set_tab5($data, $listas, $id_marco)
+    {
+        if($id_marco > 0){
+            $this->db->where('id_marco', $id_marco);
+            $this->db->update('carta_planeacion_marco', $data);
+        }else{
+
+            $this->db->insert('carta_planeacion_marco', $data);
+            $id_marco = $this->db->insert_id();
+        }
+        if(count($listas) >0){
+            foreach ($listas as $row)
+            {
+                $lista = array(
+                      'id_lista_cat' => $row['id_lista_cat'],
+                      'id_temp' => $row['id_temp'],
+                      'id_marco' => $id_marco
+                    );
+
+               $this->db->insert('carta_planeacion_listas_marco', $lista);
+            }
+        }
+
+       
+        return $id_marco;
+        
+    }
+
+     function get_tab5($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_marco where id_auditoria =".$idAudi;
+
+        $result = $this->db->query($query)->result();
+
+        if(count($result) > 0){
+             $id_marco = $result[0]->id_marco;
+
+             $listasQuery = "SELECT * FROM carta_planeacion_listas_marco where id_marco =".$id_marco;
+
+             $result[0]->listas = $this->db->query($listasQuery)->result();
+        }
+
+        return $result;
+    }
+
+    function set_tab6($data, $objetivos, $funciones, $id_manual)
+    {
+        if($id_manual > 0){
+            $this->db->where('id_manual', $id_manual);
+            $this->db->update('carta_planeacion_manuales', $data);
+        }else{
+
+            $this->db->insert('carta_planeacion_manuales', $data);
+            $id_manual = $this->db->insert_id();
+        }
+
+        if(count($objetivos) > 0){
+            foreach ($objetivos as $row)
+            {
+                $obj = array(
+                      'id_temp' => $row['id_temp'],
+                      'objetivo' => $row['objetivo'],
+                      'id_manual' => $id_manual
+                    );
+               
+               $id_objetivo = $row['id_objetivo'];
+
+                if($id_objetivo == 0){
+                    $this->db->insert('carta_planeacion_objetivos_manuales', $obj);
+                }else{
+                    $this->db->where('id_objetivo', $id_objetivo);
+                    $this->db->update('carta_planeacion_objetivos_manuales', $obj);
+                }
+            }
+        }
+
+        if(count($funciones) > 0){
+            foreach ($funciones as $row)
+            {
+                $func = array(
+                      'id_temp' => $row['id_temp'],
+                      'funcion' => $row['funcion'],
+                      'id_manual' => $id_manual
+                    );
+                $id_funcion = $row['id_funcion'];
+
+                if($id_funcion == 0){
+                    $this->db->insert('carta_planeacion_funciones_manuales', $func);
+                }else{
+                    $this->db->where('id_funcion', $id_funcion);
+                    $this->db->update('carta_planeacion_funciones_manuales', $func);
+                }
+            }
+        }
+
+       
+        return $id_manual;
+        
+    }
+
+     function get_tab6($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_manuales where id_auditoria =".$idAudi;
+
+        $result = $this->db->query($query)->result();
+
+        if(count($result) > 0){
+             $id_manual = $result[0]->id_manual;
+
+             $objQuery = "SELECT * FROM carta_planeacion_objetivos_manuales where id_manual =".$id_manual;
+             $funcQuery = "SELECT * FROM carta_planeacion_funciones_manuales where id_manual =".$id_manual;
+
+             $result[0]->objetivos = $this->db->query($objQuery)->result();
+             $result[0]->funciones = $this->db->query($funcQuery)->result();
+        }
+
+        return $result;
+    }
+
+    function set_tab7($data, $proc, $num_direccion, $id_mapa)
+    {
+        if($id_mapa > 0){
+            $this->db->where('id_mapa', $id_mapa);
+            $this->db->update('carta_planeacion_mapas', $data);
+        }else{
+
+            $this->db->insert('carta_planeacion_mapas', $data);
+            $id_mapa = $this->db->insert_id();
+        }
+
+        $obj = array(
+              'rubro' => $proc['rubro'],
+              'proceso' => $proc['proceso'],
+              'objetivo' => $proc['objetivo'],
+              'id_mapa' => $id_mapa,
+              'num_direccion'=> $num_direccion
+            );
+       
+        $id_direccion = $proc['id_direccion'];
+
+        if($id_direccion == 0){
+            $this->db->insert('carta_planeacion_mapas_direcciones', $obj);
+            $id_direccion = $this->db->insert_id();
+        }else{
+            $this->db->where('id_direccion', $id_direccion);
+            $this->db->update('carta_planeacion_mapas_direcciones', $obj);
+
+        }
+
+        $etapasProc = $proc['etapasProc'];
+
+        if(count($etapasProc) > 0){
+            foreach ($etapasProc as $row)
+            {
+                 $etapa = array(
+                      'etapa' => $row['etapa'],
+                      'descripcion' => $row['descripcion'],
+                      'responsable' => $row['responsable'],
+                      'id_direccion' => $id_direccion
+                    );
+                $id_etapa = $row['id_etapa'];
+
+                if($id_etapa == 0){
+                    $this->db->insert('carta_planeacion_mapas_etapas_proceso', $etapa);
+                }else{
+                    $this->db->where('id_etapa', $id_etapa);
+                    $this->db->update('carta_planeacion_mapas_etapas_proceso', $etapa);
+                }
+            }
+        }
+       
+        return $id_mapa;
+        
+    }
+
+     function get_tab7($idAudi)
+    {
+        $query = "SELECT * FROM carta_planeacion_mapas where id_auditoria =".$idAudi;
+
+        $result = $this->db->query($query)->result();
+
+        if(count($result) > 0){
+             $id_mapa = $result[0]->id_mapa;
+
+             $dirQuery = "SELECT * FROM carta_planeacion_mapas_direcciones where id_mapa =".$id_mapa;
+             $result[0]->direcciones = $this->db->query($dirQuery)->result();
+
+            foreach ($result[0]->direcciones as $row) {
+
+                $funcQuery = "SELECT * FROM carta_planeacion_mapas_etapas_proceso where id_direccion =".$row->id_direccion;
+                 $row->etapasProc = $this->db->query($funcQuery)->result();
+            }
+        }
+
+        return $result;
+    }
 
 
 

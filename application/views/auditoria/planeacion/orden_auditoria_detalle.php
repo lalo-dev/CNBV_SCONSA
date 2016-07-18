@@ -10,23 +10,23 @@
 
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" href="assets/img/favicons/favicon.png">
+    <link rel="shortcut icon" href="<?=IMG ?>favicons/favicon.png">
 
-    <link rel="icon" type="image/png" href="assets/img/favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="assets/img/favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/img/favicons/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="assets/img/favicons/favicon-160x160.png" sizes="160x160">
-    <link rel="icon" type="image/png" href="assets/img/favicons/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="<?=IMG ?>favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="<?=IMG ?>favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="<?=IMG ?>favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="<?=IMG ?>favicons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="<?=IMG ?>favicons/favicon-192x192.png" sizes="192x192">
 
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicons/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="<?=IMG ?>favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="<?=IMG ?>favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?=IMG ?>favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="<?=IMG ?>favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?=IMG ?>favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="<?=IMG ?>favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="<?=IMG ?>favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?=IMG ?>favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?=IMG ?>favicons/apple-touch-icon-180x180.png">
     <!-- END Icons -->
 
     <!-- Stylesheets -->
@@ -34,8 +34,8 @@
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
 
     <!-- Bootstrap and OneUI CSS framework -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
+    <link rel="stylesheet" href="<?=CSS ?>bootstrap.min.css">
+    <link rel="stylesheet" id="css-main" href="<?=CSS ?>oneui.css">
 
     <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
     <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
@@ -105,7 +105,7 @@
         <!-- END Page Header -->
 
         <!-- Page Content -->
-        <div class="content">
+        <div id="c-mdl" class="content">
             <div class="block">
                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
                     <li class="active">
@@ -171,19 +171,11 @@
                                                         <div class="block">
                                                             <div class="js-chat-talk overflow-y-auto block-content block-content-full" data-chat-id="3">
                                                                 <!-- Messages -->
-                                                                <div class="font-s12 text-muted text-center push-20-t push-15"><em>Yesterday</em></div>
-                                                                <div class="block block-rounded block-transparent push-15 push-50-l">
-                                                                    <div class="block-content block-content-full block-content-mini bg-gray-lighter">Hi there!</div>
-                                                                </div>
-                                                                <div class="font-s12 text-muted text-center push-20-t push-10"><em>Today</em></div>
-                                                                <div class="block block-rounded block-transparent push-15 push-50-r">
-                                                                    <div class="block-content block-content-full block-content-mini bg-gray-light">Hi!!!</div>
-                                                                </div>
                                                                 <!-- END Messages -->
                                                             </div>
                                                             <div class="js-chat-form block-content block-content-full block-content-mini">
                                                                 <form action="base_ui_chat.html" method="post">
-                                                                    <input class="js-chat-input form-control" type="text" data-target-chat-id="3" placeholder="Type a message and hit enter..">
+                                                                    <input id="txtChat" class="js-chat-input form-control" type="text" data-target-chat-id="3" placeholder="Type a message and hit enter..">
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -234,18 +226,18 @@
                             <div class="row">
                                 <div class="col-sm-1 col-sm-offset-5">
                                     <label class="css-input switch switch-primary" title="Verificado">
-                                        <input type="checkbox"><span></span> Verficado
+                                        <input type="checkbox" data-bind="checked:gral.verificado"><span></span> Verficado
                                     </label>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="css-input switch switch-success" title="Validado">
-                                        <input type="checkbox"><span></span> Validado
+                                        <input type="checkbox" data-bind="checked:gral.validado"><span></span> Validado
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <div class="form-material floating open">
-                                    <select class="form-control" id="periodoReserva" name="periodoReserva" size="1">
+                                <div class="form-material open">
+                                    <select class="form-control" id="periodoReserva" name="periodoReserva" size="1" data-bind="value:gral.periodo_reserva">
                                         <option>  </option><!-- Empty value for demostrating material select box -->
                                         <option value="1">Periodo x</option>
                                         <option value="2">Periodo xx</option>
@@ -254,56 +246,56 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="fundamnt" name="fundamnt">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="fundamnt" name="fundamnt" data-bind="value:gral.fundamento_legal_2">
                                     <label for="fundamnt">Fundamento legal</label>
                                 </div>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="amplia_reser" name="amplia_reser">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="amplia_reser" name="amplia_reser" data-bind="value:gral.ampli_reserva">
                                     <label for="amplia_reser">Ampliación de reserva</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="confidencial" name="confidencial">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="confidencial" name="confidencial" data-bind="value:gral.confidencial">
                                     <label for="confidencial">Confidencial</label>
                                 </div>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="fundlegal" name="fundlegal">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="fundlegal" name="fundlegal" data-bind="value:gral.fundamento_legal">
                                     <label for="fundlegal">Fundamento legal</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="clasifica" name="clasifica">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="clasifica" name="clasifica" data-bind="value:gral.clasifico">
                                     <label for="clasifica">Clasifico (titulos)</label>
                                 </div>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="fundlegal" name="fundlegal">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="fundlegal" name="fundlegal" data-bind="value:gral.fec_clasificacion">
                                     <label for="fundlegal">Fecha de clasificación</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="desclasifico" name="desclasifico">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="desclasifico" name="desclasifico" data-bind="value:gral.desclasifico">
                                     <label for="desclasifico">Desclasifico</label>
                                 </div>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <div class="form-material floating">
-                                    <input class="form-control" type="text" id="fdescla" name="fdescla">
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="fdescla" name="fdescla" data-bind="value:gral.fec_des_clasificacion">
                                     <label for="fdescla">Fecha de desclasificación</label>
                                 </div>
                             </div>
                             <div class="col-md-10 col-md-offset-2">
                                 <div class="form-group">
-                                    <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                    <button class="btn btn-sm btn-primary" type="submit" data-bind="click:saveGeneral">Guardar</button>
                                     <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                                 </div>
                             </div>
@@ -316,20 +308,20 @@
                         <div class="row">
                             <div class="col-sm-1 col-sm-offset-5">
                                 <label class="css-input switch switch-primary" title="Verificado">
-                                    <input type="checkbox"><span></span> Verficado
+                                    <input type="checkbox" data-bind="checked:orden.verificado"><span></span> Verficado
                                 </label>
                             </div>
                             <div class="col-sm-1">
                                 <label class="css-input switch switch-success" title="Validado">
-                                    <input type="checkbox"><span></span> Validado
+                                    <input type="checkbox" data-bind="checked:orden.validado"><span></span> Validado
                                 </label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-2">
-                                    <div class="form-material floating">
-                                        <input type="text" class="js-datepicker form-control" data-date-format="dd/mm/yyyy" id="fecha" name="fecha">
+                                    <div class="form-material">
+                                        <input type="text" class="js-datepicker form-control" data-date-format="yyyy-mm-dd" id="fecha" name="fecha" data-bind="value: orden.fecha">
                                         <label for="fecha">Fecha</label>
                                     </div>
                                 </div>
@@ -339,27 +331,27 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-4">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="rol" name="rol">
+                                    <div class="form-material">
+                                        <input class="form-control" type="text" id="rol" name="rol" data-bind="value: orden.rol">
                                         <label for="rol">Rol</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="nombre" name="nombre">
+                                    <div class="form-material">
+                                        <input class="form-control" type="text" id="nombre" name="nombre" data-bind="value: orden.nombre">
                                         <label for="nombre">Nombre</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="grado" name="grado">
+                                    <div class="form-material">
+                                        <input class="form-control" type="text" id="grado" name="grado" data-bind="value: orden.grado">
                                         <label for="grado">Grado</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="form-material floating open">
-                                        <select class="form-control" id="coordinacb" name="coordinacb" size="1">
+                                    <div class="form-material open">
+                                        <select class="form-control" id="coordinacb" name="coordinacb" size="1"  data-bind="value: orden.coordinado">
                                             <option>  </option><!-- Empty value for demostrating material select box -->
                                             <option value="1">Coordinado 1</option>
                                             <option value="2">Coordinado 2</option>
@@ -368,14 +360,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="periodo" name="periodo">
+                                    <div class="form-material">
+                                        <input class="form-control" type="text" id="periodo" name="periodo" data-bind="value: orden.periodo">
                                         <label for="periodo">Periodo</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="verificar" name="verificar">
+                                    <div class="form-material">
+                                        <input class="form-control" type="text" id="verificar" name="verificar" data-bind="value: orden.verificar">
                                         <label for="verificar">Verificar</label>
                                     </div>
                                 </div>
@@ -387,30 +379,27 @@
                                 <blockquote>
                                     <div class="col-md-12">Firmas: </div>
                                     <div class="col-md-3">
-                                        <div class="form-material floating open">
-                                            <select class="form-control" id="rol" name="rol" size="1">
-                                                <option>  </option><!-- Empty value for demostrating material select box -->
-                                                <option value="1">Rol 1</option>
-                                                <option value="2">Rol 2</option>
-                                                <option value="3">Rol 3</option>
+                                        <div class="form-material open">
+                                            <select class="form-control" id="slt-rol" name="rol" size="1" 
+                                               data-value-field="id",
+                                               data-text-field="des",
+                                               data-bind="source:catFirma, value: firma.rol">
                                             </select>
-                                            <label for="rol">Rol</label>
+                                            <label for="slt-rol">Rol</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="form-material floating open">
-                                            <select class="form-control" id="auditor" name="auditor" size="1">
-                                                <option>  </option><!-- Empty value for demostrating material select box -->
-                                                <option value="1">Auditor 1</option>
-                                                <option value="2">Auditor 2</option>
-                                                <option value="3">Auditor 3</option>
-                                            </select>
-                                            <label for="auditor">Auditor</label>
+                                        <div class="form-material open">
+                                            <select class="form-control" id="slt-auditor" name="auditor" size="1" 
+                                               data-value-field="id",
+                                               data-text-field="des",
+                                               data-bind="source:catFirma, value: firma.auditor"></select>
+                                            <label for="slt-auditor">Auditor</label>
                                         </div>
                                     </div>
                                     <div class="col-md-1">
-                                        <div class="form-material floating">
-                                            <button class="btn btn-xs btn-success">+</button>
+                                        <div class="form-material">
+                                            <button class="btn btn-xs btn-success" data-bind="click:addFirma">+</button>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
@@ -422,36 +411,19 @@
                                                 <td class="text-center"><strong>Eliminar</strong></td>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Rol 1</td>
-                                                <td>Auditor 1</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Rol 2</td>
-                                                <td>Auditor 2</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Rol 3</td>
-                                                <td>Auditor 3</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
+                                            <tbody data-bind="source:firmas" data-template="firma-temp"></tbody>
                                         </table>
+                                        <script id="firma-temp" type="text/x-kendo-template">
+                                            <tr>
+                                                <td>#: des #</td>
+                                                <td>#: des_auditor #</td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" data-original-title="" data-bind="click:deletFirma"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </script>
                                     </div>
                                     <div class="clearfix"></div>
                                 </blockquote>
@@ -462,19 +434,17 @@
                                 <blockquote>
                                     <div class="col-md-10">CC: </div>
                                     <div class="col-md-3">
-                                        <div class="form-material floating open">
-                                            <select class="form-control" id="nombr" name="nombr" size="1">
-                                                <option>  </option><!-- Empty value for demostrating material select box -->
-                                                <option value="1">Nombre 1</option>
-                                                <option value="2">Nombre 2</option>
-                                                <option value="3">Nombre 3</option>
-                                            </select>
-                                            <label for="nombr">Rol</label>
+                                        <div class="form-material open">
+                                            <select class="form-control" id="slt-ccrol" name="nombr" size="1" 
+                                            data-value-field="id",
+                                               data-text-field="des",
+                                               data-bind="source:catFirma, value: CCRol"></select>
+                                            <label for="slt-ccrol">Rol</label>
                                         </div>
                                     </div>
                                     <div class="col-md-1">
-                                        <div class="form-material floating">
-                                            <button class="btn btn-xs btn-success">+</button>
+                                        <div class="form-material">
+                                            <button class="btn btn-xs btn-success" data-bind="click:addCC">+</button>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
@@ -485,33 +455,18 @@
                                                 <td class="text-center"><strong>Eliminar</strong></td>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td class="text-center">CC 1</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">CC 2</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">CC 3</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
+                                            <tbody data-bind="source:CCs" data-template="cc-temp"></tbody>
                                         </table>
+                                        <script id="cc-temp" type="text/x-kendo-template">
+                                            <tr>
+                                                <td class="text-center">#: des_ccrol #</td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" data-original-title="" data-bind="click:deletCC"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </script>
                                     </div>
                                     <div class="clearfix"></div>
                                 </blockquote>
@@ -519,7 +474,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                <button class="btn btn-sm btn-primary" type="submit" data-bind="click: saveOrden">Guardar</button>
                                 <button class="btn btn-sm btn-default" type="reset">Cancelar</button>
                             </div>
                         </div>
@@ -547,37 +502,64 @@
 
 
 <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-<script src="assets/js/core/jquery.min.js"></script>
-<script src="assets/js/core/bootstrap.min.js"></script>
-<script src="assets/js/core/jquery.slimscroll.min.js"></script>
-<script src="assets/js/core/jquery.scrollLock.min.js"></script>
-<script src="assets/js/core/jquery.appear.min.js"></script>
-<script src="assets/js/core/jquery.countTo.min.js"></script>
-<script src="assets/js/core/jquery.placeholder.min.js"></script>
-<script src="assets/js/core/js.cookie.min.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="<?=JS ?>core/jquery.min.js"></script>
+<script src="<?=JS ?>core/bootstrap.min.js"></script>
+<script src="<?=JS ?>core/jquery.slimscroll.min.js"></script>
+<script src="<?=JS ?>core/jquery.scrollLock.min.js"></script>
+<script src="<?=JS ?>core/jquery.appear.min.js"></script>
+<script src="<?=JS ?>core/jquery.countTo.min.js"></script>
+<script src="<?=JS ?>core/jquery.placeholder.min.js"></script>
+<script src="<?=JS ?>core/js.cookie.min.js"></script>
+<script src="<?=JS ?>app.js"></script>
 
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?=JS ?>plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="<?=JS ?>plugins/jquery-validation/jquery.validate.min.js"></script>
 
 <!-- Page JS Code -->
-<script src="assets/js/pages/base_forms_wizard.js"></script>
+<script src="<?=JS ?>pages/base_forms_wizard.js"></script>
 
 <!-- Page JS Code -->
-<script src="assets/js/pages/base_forms_validation.js"></script>
+<script src="<?=JS ?>pages/base_forms_validation.js"></script>
 
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-datetimepicker/moment.min.js"></script>
-<script src="assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-<script src="assets/js/plugins/select2/select2.full.min.js"></script>
-<script src="assets/js/plugins/masked-inputs/jquery.maskedinput.min.js"></script>
-<script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
-<script src="assets/js/plugins/dropzonejs/dropzone.min.js"></script>
-<script src="assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>
+<script src="<?=JS ?>plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="<?=JS ?>plugins/bootstrap-datetimepicker/moment.min.js"></script>
+<script src="<?=JS ?>plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="<?=JS ?>plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="<?=JS ?>plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="<?=JS ?>plugins/select2/select2.full.min.js"></script>
+<script src="<?=JS ?>plugins/masked-inputs/jquery.maskedinput.min.js"></script>
+<script src="<?=JS ?>plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="<?=JS ?>plugins/dropzonejs/dropzone.min.js"></script>
+<script src="<?=JS ?>plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>
+
+<script src="<?=JS ?>kendo.web.min.js"></script>
+<!-- <script src="//kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script> -->
+
+<script type="text/javascript">
+ var jx = null;
+ var idRevision = "<?= $id_revision ?>";
+ console.log(idRevision);
+
+    $(function(){
+      jx = function(m, d, s){
+            $.ajax({
+              type: "POST",
+              url: "<?=URL ?>AuditoriaController/"+ m,
+              dataType: 'json',
+              data:  (d)?d:null,
+              success: function(res) {
+                s(res);
+              },
+              error: function(res) {
+                console.log("error",res);
+              }
+          });
+        }
+    })
+</script>
+<script src="<?=JS ?>orden.auditoria.js"></script>
 
 <!-- Page JS Code -->
 <script>
@@ -587,6 +569,6 @@
     });
 </script>
 <!-- Page JS Code -->
-<script src="assets/js/pages/base_ui_chat.js"></script>
+<script src="<?=JS ?>pages/base_ui_chat.js"></script>
 </body>
 </html>

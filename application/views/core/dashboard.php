@@ -3,81 +3,26 @@
 <!--[if gt IE 9]><!--> <html class="no-focus"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-
         <title>CNBV</title>
-
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
-
-        <!-- Icons -->
-        <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-        <link rel="shortcut icon" href="assets/img/favicons/favicon.png">
-
-        <link rel="icon" type="image/png" href="assets/img/favicons/favicon-16x16.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="assets/img/favicons/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="assets/img/favicons/favicon-96x96.png" sizes="96x96">
-        <link rel="icon" type="image/png" href="assets/img/favicons/favicon-160x160.png" sizes="160x160">
-        <link rel="icon" type="image/png" href="assets/img/favicons/favicon-192x192.png" sizes="192x192">
-
-        <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicons/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicons/apple-touch-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicons/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicons/apple-touch-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicons/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicons/apple-touch-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicons/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicons/apple-touch-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon-180x180.png">
-        <!-- END Icons -->
-
-        <!-- Stylesheets -->
-        <!-- Web fonts -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
-
-        <!-- Page JS Plugins CSS -->
-        <link rel="stylesheet" href="assets/js/plugins/slick/slick.min.css">
-        <link rel="stylesheet" href="assets/js/plugins/slick/slick-theme.min.css">
-
-        <!-- Bootstrap and OneUI CSS framework -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
-
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
-        <!-- END Stylesheets -->
+        <!-- Iconos y CSS -->
+        <?php $this->load->view('core/head_assets');?>
     </head>
     <body>
         <!-- Page Container -->
-        <!--
-            Available Classes:
-
-            'enable-cookies'             Remembers active color theme between pages (when set through color theme list)
-
-            'sidebar-l'                  Left Sidebar and right Side Overlay
-            'sidebar-r'                  Right Sidebar and left Side Overlay
-            'sidebar-mini'               Mini hoverable Sidebar (> 991px)
-            'sidebar-o'                  Visible Sidebar by default (> 991px)
-            'sidebar-o-xs'               Visible Sidebar by default (< 992px)
-
-            'side-overlay-hover'         Hoverable Side Overlay (> 991px)
-            'side-overlay-o'             Visible Side Overlay by default (> 991px)
-
-            'side-scroll'                Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (> 991px)
-
-            'header-navbar-fixed'        Enables fixed header
-        -->
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
             <!-- Side Overlay-->
-            <?php include_once('sideContent.php'); ?>
+            <?php $this->load->view('core/sideContent') ?>
             <!-- END Side Overlay -->
 
             <!-- Sidebar -->
-            <?php include_once('menu.php'); ?>
+            <?php $this->load->view('core/menu'); ?>
             <!-- END Sidebar -->
 
             <!-- Header -->
             <header id="header-navbar" class="content-mini content-mini-full">
                 <!-- Header Navigation Right -->
-                <?php include_once('headerNavigation.php'); ?>
+                <?php $this->load->view('core/headerNavigation');?>
+                <?php $this->load->view('core/headerNavigation');?>
                 <!-- END Header Navigation Right -->
 
                 <!-- Header Navigation Left -->
@@ -103,7 +48,7 @@
             <!-- Main Container -->
             <main id="main-container">
                 <!-- Page Header -->
-                <div class="content bg-image overflow-hidden" style="background-image: url('assets/img/various/logoGeneral.png');">
+                <div class="content bg-image overflow-hidden" style="background-image: url('<?=IMG ?>various/logoGeneral.png');">
                     <div class="push-50-t push-15">
                         <h1 class="h2 text-white animated zoomIn">&nbsp;</h1>
                         <hr />
@@ -114,25 +59,20 @@
                 <!-- Stats -->
                 <div class="content bg-white border-b">
                     <div class="row items-push text-uppercase">
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-12 col-md-4">
                             <div class="font-w700 text-gray-darker animated fadeIn">Auditorías</div>
-                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy</small></div>
-                            <a class="h2 font-w300 text-primary animated flipInX" href="base_comp_charts.html">300</a>
+                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy | <?php echo date('d - m - y')?></small></div>
+                            <a class="h2 font-w300 text-primary animated flipInX"><?php echo $totalAuditorias->total; ?></a>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-12 col-md-4">
                             <div class="font-w700 text-gray-darker animated fadeIn">Seguimientos</div>
-                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy</small></div>
-                            <a class="h2 font-w300 text-primary animated flipInX" href="base_comp_charts.html">100</a>
+                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy | <?php echo date('d - m - y')?></small></div>
+                            <a class="h2 font-w300 text-primary animated flipInX"><?php echo $totalSeguimientos->total; ?></a>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-12 col-md-4">
                             <div class="font-w700 text-gray-darker animated fadeIn">PRA</div>
-                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy</small></div>
-                            <a class="h2 font-w300 text-primary animated flipInX" href="base_comp_charts.html"> 50</a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <div class="font-w700 text-gray-darker animated fadeIn">Avance general</div>
-                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy</small></div>
-                            <a class="h2 font-w300 text-primary animated flipInX" href="base_comp_charts.html"> 80 %</a>
+                            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Hoy | <?php echo date('d - m - y')?></small></div>
+                            <a class="h2 font-w300 text-primary animated flipInX"> 0</a>
                         </div>
                     </div>
                 </div>
@@ -150,7 +90,7 @@
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                                         </li>
                                     </ul>
-                                    <h3 class="block-title"> News</h3>
+                                    <h3 class="block-title"> Noticias</h3>
                                 </div>
                                 <div class="block-content">
                                     <ul class="list list-timeline pull-t">
@@ -294,7 +234,7 @@
                                                         </td>
                                                         <td class="bg-gray-lighter" style="width: 50%;">
                                                             
-                                                            <div class="h5 text-muted text-uppercase push-5-t">Auditoría</div>
+                                                            <div class="h5 text-muted text-uppercase push-5-t">PAT</div>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -334,6 +274,7 @@
                                                 </tbody>
                                             </table>
                                         </a>
+                                        <!--
                                         <a class="block block-link-hover3" href="javascript:void(0)">
                                             <table class="block-table text-center">
                                                 <tbody>
@@ -351,6 +292,7 @@
                                                 </tbody>
                                             </table>
                                         </a>
+                                        -->
                                         <a class="block block-link-hover3" href="javascript:void(0)">
                                             <table class="block-table text-center">
                                                 <tbody>
@@ -381,34 +323,20 @@
             <!-- END Main Container -->
 
             <!-- Footer -->
-            <footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix">
-                
-                <div class="pull-left">
-                    <a class="font-w600" href="" target="_blank">CNBV</a> &copy; <span class="js-year-copy"></span>
-                </div>
-            </footer>
+            <?php $this->load->view('core/footer');?>
             <!-- END Footer -->
         </div>
         <!-- END Page Container -->
 
-
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-        <script src="assets/js/core/jquery.min.js"></script>
-        <script src="assets/js/core/bootstrap.min.js"></script>
-        <script src="assets/js/core/jquery.slimscroll.min.js"></script>
-        <script src="assets/js/core/jquery.scrollLock.min.js"></script>
-        <script src="assets/js/core/jquery.appear.min.js"></script>
-        <script src="assets/js/core/jquery.countTo.min.js"></script>
-        <script src="assets/js/core/jquery.placeholder.min.js"></script>
-        <script src="assets/js/core/js.cookie.min.js"></script>
-        <script src="assets/js/app.js"></script>
+        <?php $this->load->view('core/core_js'); ?>
 
         <!-- Page Plugins -->
-        <script src="assets/js/plugins/slick/slick.min.js"></script>
-        <script src="assets/js/plugins/chartjs/Chart.min.js"></script>
+        <script src="<?=JS ?>plugins/slick/slick.min.js"></script>
+        <script src="<?=JS ?>plugins/chartjs/Chart.min.js"></script>
 
         <!-- Page JS Code -->
-        <script src="assets/js/pages/base_pages_dashboard.js"></script>
+        <script src="<?=JS ?>pages/base_pages_dashboard.js"></script>
         <script>
             $(function () {
                 // Init page helpers (Slick Slider plugin)
